@@ -26,5 +26,15 @@ def index():
     }
     return render_template("index.html", counts=counts)
 
+@app.route("/dashboard-ev.html")
+def dashboard_ev():
+    return render_template("dashboard-ev.html")
+
+
+@app.route("/dashboard-org.html")
+def dashboard_org():
+    return render_template("dashboard-org.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
