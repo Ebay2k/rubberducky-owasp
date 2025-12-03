@@ -24,7 +24,7 @@ def index():
         "studies": studies.count_all()[0],
         "enrollments": enrollments.count_all()[0],
     }
-    return render_template("index.html", counts=counts)
+    return render_template("home.html", counts=counts)
 
 @app.route("/dashboard-ev.html")
 def dashboard_ev():
