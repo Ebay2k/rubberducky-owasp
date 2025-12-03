@@ -35,6 +35,10 @@ def dashboard_ev():
 def dashboard_org():
     return render_template("dashboard-org.html")
 
+@app.route("/dashboard-bhd.html")
+def dashboard_bhd():
+    return render_template("/dashboard-bhd.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
