@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, render_template
 from data.database import Database
 from models.user import User
@@ -9,7 +10,7 @@ from models.enrollment import Enrollment
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(__file__)
-DB_PATH = os.path.join(BASE_DIR, "data", "app.db")
+DB_PATH = os.path.join(BASE_DIR, "data", "data/app.db")
 
 _db = Database(DB_PATH)
 users = User(DB_PATH)
@@ -34,9 +35,10 @@ def dashboard_org():
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 
-@app.route("/ev-aanvragen.html.jinja")
+@app.route("/ev-aanvragen.html")
 def ev_aanvragen():
-    return render_template("/ev-aanvragen.html.jinja")
+    study = studies.get_study()
+    return render_template("/ev-aanvragen.html", study=study)
 
 @app.route("/org-aanvragen.html")
 def org_aanvragen():

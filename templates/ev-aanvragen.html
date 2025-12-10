@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Aanvragen Ervaringsdeskundige</title>
+</head>
+<body>
+<h1>Hier komen de aanvragen waarop de ervaringsdeskundige kunnen reageren</h1>
+    <h1>Hieronder ff een voorbeeld</h1>
+        {%for study in study%}
+            <h2>{{ study.id }}: {{ study.title }}</h2>
+            <p>Status: {{ study.status }}</p>
+            <p>{{ study.description }}</p>
+        {%endfor%}
+</body>
+</html>

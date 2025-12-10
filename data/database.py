@@ -6,6 +6,7 @@ class Database:
         self._setup_tables()
 
     def connect(self):
+        self.path = "data/app.db"
         con = sqlite3.connect(self.path)
         con.row_factory = sqlite3.Row
         con.execute('PRAGMA foreign_keys = ON')
