@@ -16,15 +16,10 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
+
 @app.route("/")
 def index():
-    counts = {
-        "experts": users.count_all()[0],
-        "organizations": organizations.count_all()[0],
-        "studies": studies.count_all()[0],
-        "enrollments": enrollments.count_all()[0],
-    }
-    return render_template("home.html", counts=counts)
+    return render_template("home.html")
 
 @app.route("/dashboard-ev.html")
 def dashboard_ev():
@@ -38,6 +33,11 @@ def dashboard_org():
 @app.route("/dashboard-bhd.html")
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
+
+@app.route("/ev-aanvragen.html")
+def ev_aanvragen():
+    return render_template("/ev-aanvragen.html")
+
 
 
 if __name__ == "__main__":
