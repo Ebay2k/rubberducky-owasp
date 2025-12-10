@@ -38,6 +38,9 @@ def dashboard_bhd():
 def ev_aanvragen():
     return render_template("/ev-aanvragen.html")
 
+@app.route("/org-aanvragen.html")
+def org_aanvragen():
+    return render_template("/org-aanvragen.html")
 
 
 if __name__ == "__main__":
