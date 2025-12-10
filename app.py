@@ -50,6 +50,10 @@ def org_profiel():
 def ev_profiel():
     return render_template("/ev-profiel.html")
 
+@app.route("/bhd-org-detail.html")
+def bhd_org_detail():
+    return render_template("/bhd-org-detail.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
