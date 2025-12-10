@@ -54,7 +54,8 @@ def ev_profiel():
 
 @app.route("/bhd-org-detail.html")
 def bhd_org_detail():
-    return render_template("/bhd-org-detail.html")
+    organization = organizations.get_organization()
+    return render_template("/bhd-org-detail.html", organization=organization)
 
 
 if __name__ == "__main__":

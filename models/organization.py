@@ -10,3 +10,10 @@ class Organization:
             cur.execute("SELECT COUNT() FROM organizations")
             con.commit()
             return cur.fetchone()
+
+    def get_organization(self):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM organizations")
+            con.commit()
+            return cur.fetchall()
