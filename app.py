@@ -42,6 +42,14 @@ def ev_aanvragen():
 def org_aanvragen():
     return render_template("/org-aanvragen.html")
 
+@app.route("/org-profiel.html")
+def org_profiel():
+    return render_template("/org-profiel.html")
+
+@app.route("/ev-profiel.html")
+def ev_profiel():
+    return render_template("/ev-profiel.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
