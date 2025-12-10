@@ -39,6 +39,10 @@ def dashboard_org():
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 
+@app.route("/org-aanvragen.html")
+def org_aanvragen():
+    return render_template("/org-aanvragen.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
