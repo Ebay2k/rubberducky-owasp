@@ -6,5 +6,15 @@
 </head>
 <body>
 <h1>Organisatie detail</h1>
+    <h1>Informatie over al ingeschreven organisaties</h1>
+        {% for organization in organization %}
+            <h2>{{ organization.id }}: {{ organization.name }}</h2>
+            <p>Contact persoon: {{ organization.contact_pers4on }}</p>
+            <p>E-mail: {{ organization.email }}</p>
+            <p>Telefoon nummer: {{ organization.phone }}</p>
+            <p>Website: {{ organization.website }}</p>
+            <p>Type organisatie: {{ organization.type }}</p>
+            <p>Organisatie beschrijving: {{ organization.description }}</p>
+        {%endfor%}
 </body>
 </html>
