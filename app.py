@@ -34,9 +34,9 @@ def dashboard_org():
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 
-@app.route("/ev-aanvragen.html")
+@app.route("/ev-aanvragen.html.jinja")
 def ev_aanvragen():
-    return render_template("/ev-aanvragen.html")
+    return render_template("/ev-aanvragen.html.jinja")
 
 @app.route("/org-aanvragen.html")
 def org_aanvragen():
