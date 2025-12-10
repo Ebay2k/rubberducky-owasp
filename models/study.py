@@ -11,3 +11,11 @@ class Study:
             cur.execute("SELECT COUNT() FROM studies")
             con.commit()
             return cur.fetchone()
+
+    def get_study(self):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM studies ORDER BY id")
+            con.commit()
+            return cur.fetchall()
+
