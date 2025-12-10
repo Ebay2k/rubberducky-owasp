@@ -43,6 +43,10 @@ def dashboard_bhd():
 def org_aanvragen():
     return render_template("/org-aanvragen.html")
 
+@app.route("/org-profiel.html")
+def org_profiel():
+    return render_template("/org-profiel.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
