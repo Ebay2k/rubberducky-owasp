@@ -45,7 +45,8 @@ def dashboard_org():
 
 @app.route("/org-aanvragen.html")
 def org_aanvragen():
-    return render_template("/org-aanvragen.html")
+    forms = organizations.get_forms()
+    return render_template("/org-aanvragen.html", forms=forms)
 
 @app.route("/org-profiel.html")
 def org_profiel():
