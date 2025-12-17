@@ -24,7 +24,7 @@ def index():
     return render_template("home.html")
 
 """                                                     ### Ervaringsdeskundige ###         """
-@app.route("/dashboard-ev.html")
+@app.route("/dashboard-ev")
 def dashboard_ev():
     return render_template("dashboard-ev.html")
 
@@ -39,13 +39,14 @@ def ev_profiel():
 
 
 """                                                     ### Organisaties ###                """
-@app.route("/dashboard-org.html")
+@app.route("/dashboard-org")
 def dashboard_org():
     return render_template("dashboard-org.html")
 
 @app.route("/org-aanvragen.html")
 def org_aanvragen():
-    return render_template("/org-aanvragen.html")
+    forms = organizations.get_forms()
+    return render_template("/org-aanvragen.html", forms=forms)
 
 @app.route("/org-profiel.html")
 def org_profiel():
@@ -53,7 +54,7 @@ def org_profiel():
 
 
 """                                                     ### Beheerder ###                     """
-@app.route("/dashboard-bhd.html")
+@app.route("/dashboard-bhd")
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 

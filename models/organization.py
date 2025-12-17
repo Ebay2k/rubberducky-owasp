@@ -17,3 +17,9 @@ class Organization:
             cur.execute("SELECT * FROM organizations")
             con.commit()
             return cur.fetchall()
+
+    def get_forms(self):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM studies ORDER BY organization_id ASC")
+            return cur.fetchall()
