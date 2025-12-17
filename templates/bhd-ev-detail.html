@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Evaringsdeskundige detail</title>
+</head>
+<body>
+<h1>Ervaringsdeskundige detail</h1>
+    <h1>Informatie over al ingeschreven ervaringsdeskundige</h1>
+        {% for profile in profile %}
+            <h2>{{ profile.id }}: {{ profile.first_name }} {{ profile.last_name }}</h2>
+            <p>Postcode: </p>
+            <p>Geslacht: </p>
+            <p>Telefoon nummer: </p>
+            <p>Geboorte Datum: </p>
+            <p>Ondersteunende hulpmiddelen: </p>
+            <p>Introductie: </p>
+        {%endfor%}
+</body>
+</html>
