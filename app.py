@@ -6,6 +6,7 @@ from models.user import User
 from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
+from models.profiles import Profiles
 
 app = Flask(__name__)
 
@@ -17,6 +18,7 @@ users = User(DB_PATH)
 organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
+profiles = Profiles(DB_PATH)
 
 """                                                     ### HOME PAGE ###                   """
 @app.route("/")
@@ -62,6 +64,11 @@ def dashboard_bhd():
 def bhd_org_detail():
     organization = organizations.get_organization()
     return render_template("/bhd-org-detail.html", organization=organization)
+
+@app.route("/bhd-ev-detail.html")
+def bhd_ev_detail():
+    profile = profiles.get_profile()
+    return render_template("/bhd-ev-detail.html", profile=profile)
 
 
 
