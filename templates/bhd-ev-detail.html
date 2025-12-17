@@ -9,12 +9,17 @@
     <h1>Informatie over al ingeschreven ervaringsdeskundige</h1>
         {% for profile in profile %}
             <h2>{{ profile.id }}: {{ profile.first_name }} {{ profile.last_name }}</h2>
-            <p>Postcode: </p>
-            <p>Geslacht: </p>
-            <p>Telefoon nummer: </p>
-            <p>Geboorte Datum: </p>
-            <p>Ondersteunende hulpmiddelen: </p>
-            <p>Introductie: </p>
+            <p>Postcode: {{ profile.postcode }}</p>
+            <p>Geslacht: {{ profile.gender }}</p>
+            <p>Telefoon nummer: {{ profile.phone }}</p>
+            <p>Geboorte Datum: {{ profile.birth_date }}</p>
+            <p>Ondersteunende hulpmiddelen: {{ profile.assistive_tools }}</p>
+            <p>Introductie: {{ profile.intro }}</p>
+            <p>Notes: {{ profile.notes }}</p>
+            <p>Agreed terms: {{ profile.agreed_terms }}</p>
+            <p>Contact voorkeur: {{ profile.contact_preference }}</p>
+            <p>Type studie voorkeur: {{ profile.preferred_study_type }}</p>
+            <p>Beschikbaarheid: {{ profile.availability }}</p>
         {%endfor%}
 </body>
 </html>
