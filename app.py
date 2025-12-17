@@ -24,7 +24,7 @@ def index():
     return render_template("home.html")
 
 """                                                     ### Ervaringsdeskundige ###         """
-@app.route("/dashboard-ev.html")
+@app.route("/dashboard-ev")
 def dashboard_ev():
     return render_template("dashboard-ev.html")
 
@@ -39,7 +39,7 @@ def ev_profiel():
 
 
 """                                                     ### Organisaties ###                """
-@app.route("/dashboard-org.html")
+@app.route("/dashboard-org")
 def dashboard_org():
     return render_template("dashboard-org.html")
 
@@ -54,7 +54,7 @@ def org_profiel():
 
 
 """                                                     ### Beheerder ###                     """
-@app.route("/dashboard-bhd.html")
+@app.route("/dashboard-bhd")
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 

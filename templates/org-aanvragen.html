@@ -3,21 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Onderzoek overzicht</title>
+    <link rel="stylesheet" href="../static/main.css">
 </head>
 
 <body>
-<center>
-<h1>Onderzoek aanvragen</h1>
-</center>
-    {%for form in forms%}
-        <br>
-        <h2>Organisatie ID: {{ form.organization_id }}</h2>
-        <p>Onderzoek: {{ form.title }}</p>
-        <p>Status: {{ form.status }}</p>
-        <p>Beschikbaar: {{ "Beschikbaar" if form.available else "Nee" }}</p>
-        <p>Beschrijving: {{ form.description }}</p>
-        <p></p>
-    {%endfor%}
+<table class="tabel">
+    <thead>
+        <tr>
+            <th>Organisatie ID</th>
+            <th>Onderzoekers ID</th>
+            <th>Onderzoek</th>
+            <th>Status</th>
+            <th>Beschrijving</th>
+            <th>Beschikbaarheid</th>
+            <th>Aanpassen</th>
+        </tr>
+    </thead>
 
+    <tbody>
+        {%for form in forms%}
+        <tr>
+            <td>{{ form.organization_id }}</td>
+            <td>{{ form.id }}</td>
+            <td>{{ form.title }}</td>
+            <td>{{ form.status }}</td>
+            <td>{{ form.description }}</td>
+
+            <td class="{{ 'Beschikbaar' if form.available else 'Niet beschikbaar' }}">
+                {{"Beschikbaar" if form.availability else "Niet beschikbaar"}}
+            </td>
+            <td class="edit-button-container">
+                <a class="edit-button" href="/org-aanvragen/{{ form.id }}">Wijzig onderzoek {{form.id}}</a>
+            </td>
+
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
 </body>
 </html>
