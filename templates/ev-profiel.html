@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <title>Profiel gegevens</title>
 </head>
 <body>
-<h1>Profiel gegevens</h1>
+{% extends 'layout.html' %}
+{% block content %}
+<center>
+    <h1>Profiel gegevens</h1>
+    
+    <div style="max-width: 600px; margin: 20px auto; text-align: left;">
+        <h2>Persoonlijke Informatie</h2>
+        
+        <div style="margin-bottom: 20px;">
+            <h3>Leeftijd:</h3>
+            <p>24 jaar</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h3>Geslacht:</h3>
+            <p>Man</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h3>Beperkingen:</h3>
+            <p>Geen beperkingen</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h3>Voorkeuren:</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis eligendi eum hic illum impedit minus non omnis quia repellat. Alias aliquam asperiores aspernatur, autem doloremque iste molestiae quibusdam repellat.</p>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="/dashboard-ev" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Terug naar Dashboard</a>
+        </div>
+    </div>
+</center>
+{% endblock %}
 </body>
 </html>
