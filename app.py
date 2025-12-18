@@ -30,12 +30,12 @@ def index():
 def dashboard_ev():
     return render_template("dashboard-ev.html")
 
-@app.route("/ev-aanvragen.html")
+@app.route("/ev-aanvragen")
 def ev_aanvragen():
     study = studies.get_study()
     return render_template("/ev-aanvragen.html", study=study)
 
-@app.route("/ev-profiel.html")
+@app.route("/ev-profiel")
 def ev_profiel():
     return render_template("/ev-profiel.html")
 
@@ -45,12 +45,12 @@ def ev_profiel():
 def dashboard_org():
     return render_template("dashboard-org.html")
 
-@app.route("/org-aanvragen.html")
+@app.route("/org-aanvragen")
 def org_aanvragen():
     forms = organizations.get_forms()
     return render_template("/org-aanvragen.html", forms=forms)
 
-@app.route("/org-profiel.html")
+@app.route("/org-profiel")
 def org_profiel():
     return render_template("/org-profiel.html")
 
@@ -60,12 +60,12 @@ def org_profiel():
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 
-@app.route("/bhd-org-detail.html")
+@app.route("/bhd-org-detail")
 def bhd_org_detail():
     organization = organizations.get_organization()
     return render_template("/bhd-org-detail.html", organization=organization)
 
-@app.route("/bhd-ev-detail.html")
+@app.route("/bhd-ev-detail")
 def bhd_ev_detail():
     profile = profiles.get_profile()
     return render_template("/bhd-ev-detail.html", profile=profile)
