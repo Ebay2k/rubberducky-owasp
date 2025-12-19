@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Onderzoek Wijzigen</title>
+</head>
+<body>
+<h1>Onderzoek {{ forms.id }} wijzigen</h1>
+
+<form method = "post">
+    <label>
+        Onderzoek: <input type="text" name="title" value="{{ form.title }}">
+    </label>
+    <br>
+
+    <label>
+        Status:
+        <select name="status">
+            <option value="Nieuw" {{ "selected" if form.status == "Nieuw" }}>Nieuw</option>
+            <option value="Goedgekeurd" {{ "selected" if form.status == "Goedgekeurd" }}>Goedgekeurd</option>
+            <option value="Afgekeurd" {{ "selected" if form.status == "Afgekeurd" }}>Afgekeurd</option>
+            <option value="Gesloten" {{ "selected" if form.status == "Gesloten" }}>Gesloten</option>
+        </select>
+    </label>
+
+
+</form>
+
+
+</body>
+</html>
