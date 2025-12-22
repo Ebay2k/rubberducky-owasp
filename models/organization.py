@@ -30,11 +30,14 @@ class Organization:
             cur.execute("SELECT * FROM studies WHERE id = ?", (form_id,))
             return cur.fetchone()
 
-    def edit_form(self, form_id, title, status, description, available, start_date, end_date, study_type, location, has_reward, reward, age_min, age_max):
+    def edit_form(self, form_id, title, status, description, available):
         with self.db.connect() as con:
             cur = con.cursor()
-            cur.execute(f"UPDATE studies SET title = ?, status = ?, description = ?, available = ?,"
-                        f" start_date = ?, end_date = ?, study_type = ?, location = ?, has_reward = ?,"
-                        f" reward = ?, age_min = ?, age_max = ? WHERE id = ?",
-                        (title, status, description, available, start_date, end_date, study_type, location, has_reward, reward, age_min, age_max, form_id))
+            cur.execute("""
+            UPDATE studies SET title = ?,
+                 status = ?,
+                 description = ?, 
+                 available = ? 
+                 WHERE id = ?""",
+                        (title, status, description, available, form_id))
             con.commit()

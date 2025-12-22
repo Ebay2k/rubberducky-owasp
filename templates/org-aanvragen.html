@@ -30,7 +30,7 @@
             <td>{{ form.description }}</td>
 
             <td class="{{ 'Beschikbaar' if form.available else 'Niet beschikbaar' }}">
-                {{"Beschikbaar" if form.availability else "Niet beschikbaar"}}
+                {{"Beschikbaar" if form.available else "Niet beschikbaar"}}
             </td>
             <td class="edit-button-container">
                 <a class="edit-button" href="/org-aanvragen/{{ form.id }}">Wijzig onderzoek {{form.id}}</a>

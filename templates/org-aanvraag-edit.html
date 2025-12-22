@@ -3,25 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Onderzoek Wijzigen</title>
+    <link rel="stylesheet" href="../static/main.css">
 </head>
 <body>
-<h1>Onderzoek {{ forms.id }} wijzigen</h1>
+<h1 class="pagina_titel">Onderzoek {{ form.id }} wijzigen</h1>
 
-<form method = "post">
-    <label>
-        Onderzoek: <input type="text" name="title" value="{{ form.title }}">
+<form method = "post" class="edit_form">
+    <label class="naam_onderzoek">
+        Onderzoeksnaam: <input type="text" name="title" value="{{ form.title }}">
     </label>
-    <br>
+    <br><br>
 
-    <label>
+    <label class="onderzoeks_status">
         Status:
         <select name="status">
-            <option value="Nieuw" {{ "selected" if form.status == "Nieuw" }}>Nieuw</option>
-            <option value="Goedgekeurd" {{ "selected" if form.status == "Goedgekeurd" }}>Goedgekeurd</option>
-            <option value="Afgekeurd" {{ "selected" if form.status == "Afgekeurd" }}>Afgekeurd</option>
-            <option value="Gesloten" {{ "selected" if form.status == "Gesloten" }}>Gesloten</option>
+            <option value="nieuw" {{ "selected" if form.status == "nieuw" }}>Nieuw</option>
+            <option value="goedgekeurd" {{ "selected" if form.status == "goedgekeurd" }}>Goedgekeurd</option>
+            <option value="afgekeurd" {{ "selected" if form.status == "afgekeurd" }}>Afgekeurd</option>
+            <option value="gesloten" {{ "selected" if form.status == "gesloten" }}>Gesloten</option>
         </select>
     </label>
+    <br><br>
+
+    <label class="beschrijving_onderzoek">
+        Beschrijving:
+        <textarea name="description">{{ form.description }}</textarea>
+    </label>
+    <br><br>
+
+    <label class="checkbox">
+        <input type="checkbox" name="available" {{"checked" if form.available }}>
+        beschikbaar
+    </label>
+    <br><br>
+
+    <button type="submit">Wijzigingen opslaan?</button>
+    <a href="{{ url_for('org_aanvragen') }}">Annuleren</a>
+
 
 
 </form>

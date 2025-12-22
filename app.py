@@ -61,19 +61,9 @@ def org_aanvraag_edit(form_id):
         status = request.form["status"]
         description = request.form["description"]
         available = 1 if "available" in request.form else 0
-        start_date = request.form["start_date"]
-        end_date = request.form["end_date"]
-        study_type = request.form["study_type"]
-        location = request.form["location"]
-        has_reward = request.form["has_reward"]
-        reward = request.form["reward"]
-        age_min = request.form["age_min"]
-        age_max = request.form["age_max"]
 
         organizations.edit_form(
             form_id, title, status, description, available,
-            start_date, end_date, study_type, location,
-            has_reward, reward, age_min, age_max
         )
 
         return redirect(url_for("org_aanvragen"))
