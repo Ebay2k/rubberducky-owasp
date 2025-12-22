@@ -32,3 +32,66 @@
 .edit-button-container{
     background-color: #273F53;
 }
+
+.pagina_titel{
+    margin-bottom:50px;
+}
+
+.edit_form{
+    max-width:700px;
+}
+
+.edit_form label{
+    display: block;
+    margin-bottom: 8px;
+}
+
+.edit_form input[type="text"],
+.edit-form select {
+    width:100%;
+    padding:10px;
+    font-size:15px;
+    font-family: Arial, sans-serif;
+}
+
+.edit_form textarea{
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    font-size: 15px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+}
+
+.naam_onderzoek{
+    font-size:22px;
+    font-weight: bold;
+}
+
+.checkbox{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-actions{
+    margin-top: 12px;
+}
+
+.form-actions button{
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.form-actions a{
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+
+
+
+
+
+

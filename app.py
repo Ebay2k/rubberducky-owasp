@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from data.database import Database
 from models.user import User
 from models.organization import Organization
@@ -53,6 +53,23 @@ def org_aanvragen():
 @app.route("/org-profiel")
 def org_profiel():
     return render_template("/org-profiel.html")
+
+@app.route("/org-aanvragen/<int:form_id>", methods=["GET", "POST"])
+def org_aanvraag_edit(form_id):
+    if request.method == "POST":
+        title = request.form["title"]
+        status = request.form["status"]
+        description = request.form["description"]
+        available = 1 if "available" in request.form else 0
+
+        organizations.edit_form(
+            form_id, title, status, description, available,
+        )
+
+        return redirect(url_for("org_aanvragen"))
+
+    form = organizations.get_single_form(form_id)
+    return render_template("/org-aanvraag-edit.html", form=form)
 
 
 """                                                     ### Beheerder ###                     """
