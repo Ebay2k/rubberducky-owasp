@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Profiel gegevens</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 {% extends 'layout.html' %}
@@ -10,32 +11,30 @@
 <center>
     <h1>Profiel gegevens</h1>
     
-    <div style="max-width: 600px; margin: 20px auto; text-align: left;">
+    <div class="profile-card">
         <h2>Persoonlijke Informatie</h2>
         
-        <div style="margin-bottom: 20px;">
+        <div class="profile-field">
             <h3>Leeftijd:</h3>
-            <p>24 jaar</p>
+            <p>25 jaar</p>
         </div>
         
-        <div style="margin-bottom: 20px;">
+        <div class="profile-field">
             <h3>Geslacht:</h3>
             <p>Man</p>
         </div>
         
-        <div style="margin-bottom: 20px;">
+        <div class="profile-field">
             <h3>Beperkingen:</h3>
             <p>Geen beperkingen</p>
         </div>
         
-        <div style="margin-bottom: 20px;">
+        <div class="profile-field">
             <h3>Voorkeuren:</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis eligendi eum hic illum impedit minus non omnis quia repellat. Alias aliquam asperiores aspernatur, autem doloremque iste molestiae quibusdam repellat.</p>
+            <p>Sport, Muziek, Cultuur</p>
         </div>
         
-        <div style="margin-top: 30px;">
-            <a href="/dashboard-ev" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Terug naar Dashboard</a>
-        </div>
+        <a href="/dashboard-ev" class="back-button">Terug naar Dashboard</a>
     </div>
 </center>
 {% endblock %}
