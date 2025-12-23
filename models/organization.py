@@ -23,3 +23,21 @@ class Organization:
             cur = con.cursor()
             cur.execute("SELECT * FROM studies ORDER BY organization_id ASC")
             return cur.fetchall()
+
+    def get_single_form(self, form_id):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM studies WHERE id = ?", (form_id,))
+            return cur.fetchone()
+
+    def edit_form(self, form_id, title, status, description, available):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("""
+            UPDATE studies SET title = ?,
+                 status = ?,
+                 description = ?, 
+                 available = ? 
+                 WHERE id = ?""",
+                        (title, status, description, available, form_id))
+            con.commit()

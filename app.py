@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from data.database import Database
 from models.user import User
 from models.organization import Organization
@@ -30,12 +30,12 @@ def index():
 def dashboard_ev():
     return render_template("dashboard-ev.html")
 
-@app.route("/ev-aanvragen.html")
+@app.route("/ev-aanvragen")
 def ev_aanvragen():
     study = studies.get_study()
     return render_template("/ev-aanvragen.html", study=study)
 
-@app.route("/ev-profiel.html")
+@app.route("/ev-profiel")
 def ev_profiel():
     return render_template("/ev-profiel.html")
 
@@ -45,14 +45,31 @@ def ev_profiel():
 def dashboard_org():
     return render_template("dashboard-org.html")
 
-@app.route("/org-aanvragen.html")
+@app.route("/org-aanvragen")
 def org_aanvragen():
     forms = organizations.get_forms()
     return render_template("/org-aanvragen.html", forms=forms)
 
-@app.route("/org-profiel.html")
+@app.route("/org-profiel")
 def org_profiel():
     return render_template("/org-profiel.html")
+
+@app.route("/org-aanvragen/<int:form_id>", methods=["GET", "POST"])
+def org_aanvraag_edit(form_id):
+    if request.method == "POST":
+        title = request.form["title"]
+        status = request.form["status"]
+        description = request.form["description"]
+        available = 1 if "available" in request.form else 0
+
+        organizations.edit_form(
+            form_id, title, status, description, available,
+        )
+
+        return redirect(url_for("org_aanvragen"))
+
+    form = organizations.get_single_form(form_id)
+    return render_template("/org-aanvraag-edit.html", form=form)
 
 
 """                                                     ### Beheerder ###                     """
@@ -60,12 +77,12 @@ def org_profiel():
 def dashboard_bhd():
     return render_template("/dashboard-bhd.html")
 
-@app.route("/bhd-org-detail.html")
+@app.route("/bhd-org-detail")
 def bhd_org_detail():
     organization = organizations.get_organization()
     return render_template("/bhd-org-detail.html", organization=organization)
 
-@app.route("/bhd-ev-detail.html")
+@app.route("/bhd-ev-detail")
 def bhd_ev_detail():
     profile = profiles.get_profile()
     return render_template("/bhd-ev-detail.html", profile=profile)

@@ -6,12 +6,14 @@
 </head>
 <body>
 <center>
+    {% extends 'layout.html' %}
+    {% block content %}
 <h1>Dashboard van de Beheerder</h1>
-    <h1><a href="/">Home</a></h1>
     <h1><a href="bhd-org-detail.html">Organisatie details</a></h1>
     <h1><a href="bhd-ev-detail.html">Ervaringsdeskundige details</a></h1>
 </center>
 <hr>
 <p1>Stukje tekst eronder.</p1>
+    {% endblock %}
 </body>
 </html>
