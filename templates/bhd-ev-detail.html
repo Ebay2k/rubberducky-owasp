@@ -5,21 +5,29 @@
     <title>Evaringsdeskundige detail</title>
 </head>
 <body>
+<center>
+{% extends 'layout.html' %}
+{% block content %}
 <h1>Ervaringsdeskundige detail</h1>
     <h1>Informatie over al ingeschreven ervaringsdeskundige</h1>
         {% for profile in profile %}
             <h2>{{ profile.id }}: {{ profile.first_name }} {{ profile.last_name }}</h2>
-            <p>Postcode: {{ profile.postcode }}</p>
             <p>Geslacht: {{ profile.gender }}</p>
-            <p>Telefoon nummer: {{ profile.phone }}</p>
             <p>Geboorte Datum: {{ profile.birth_date }}</p>
+            <p>Telefoon nummer: {{ profile.phone }}</p>
+            <p>Postcode: {{ profile.postcode }}</p>
+            <p>Beschikbaarheid: {{ profile.availability }}</p>
             <p>Ondersteunende hulpmiddelen: {{ profile.assistive_tools }}</p>
             <p>Introductie: {{ profile.intro }}</p>
             <p>Notes: {{ profile.notes }}</p>
             <p>Agreed terms: {{ profile.agreed_terms }}</p>
             <p>Contact voorkeur: {{ profile.contact_preference }}</p>
             <p>Type studie voorkeur: {{ profile.preferred_study_type }}</p>
-            <p>Beschikbaarheid: {{ profile.availability }}</p>
+            <p>Heeft verzorger: {{ profile.has_guardian }}</p>
+            <p>Verzorger naam: {{ profile.guardian_name }}</p>
+            <p>Verzorger e-mail: {{ profile.guardian_email }}</p>
         {%endfor%}
+{% endblock %}
+<center>
 </body>
 </html>
