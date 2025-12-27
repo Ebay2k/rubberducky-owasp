@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Nieuw onderzoek aanmaken</title>
+
+</head>
+<body>
+
+  <h1>Nieuw onderzoek toevoegen</h1>
+
+  <form method = "post">
+    <label class = "naam_onderzoek">
+      <span class = "label_text">
+        Onderzoeksnaam:
+      </span>
+      <input type = "text" name = "title" required>
+    </label>
+    <br><br>
+
+    <label>
+      <span class = "label_text">
+        Status
+      </span>
+      <select name="status" required>
+        <option value = "nieuw">Nieuw</option>
+        <option value = "goedgekeurd">Goedgekeurd</option>
+        <option value = "afgekeurd">Afgekeurd</option>
+        <option value = "gesloten">Gesloten</option>
+      </select>
+    </label>
+    <br><br>
+
+    <label>
+      <span class = "label_text">
+        Beschrijving
+      </span>
+      <textarea name="description" required></textarea>
+    </label>
+    <br><br>
+
+    <button type = "submit">Onderzoek toevoegen</button>
+    <a href="{{ url_for('org_aanvragen') }}">Annuleren</a>
+
+
+  </form>
+</body>
+</html>
