@@ -39,5 +39,13 @@ class Organization:
                  description = ?, 
                  available = ? 
                  WHERE id = ?""",
-                        (title, status, description, available, form_id))
+                 (title, status, description, available, form_id))
+            con.commit()
+
+    def create_form(self, title, status, description, available, organization_id):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("""
+            INSERT INTO studies (title, status, description, available, organization_id) VALUES (?, ?, ?, ?, ?)""",
+                 (title, status, description, available, organization_id))
             con.commit()

@@ -71,6 +71,22 @@ def org_aanvraag_edit(form_id):
     form = organizations.get_single_form(form_id)
     return render_template("/org-aanvraag-edit.html", form=form)
 
+@app.route("/org-aanvragen/nieuw", methods=["GET", "POST"])
+def org_aanvraag_nieuw():
+    if request.method == "POST":
+        title = request.form["title"]
+        status = request.form["status"]
+        description = request.form["description"]
+        available = 1 if "available" in request.form else 0
+
+        #tijdelijke hardcoded organisatie ivm latere sessies en inloggen etc
+        organization_id = 1
+
+        organizations.create_form(title, status, description, available, organization_id)
+        return redirect(url_for("org_aanvragen"))
+    return render_template("/org-nieuwe-aanvraag.html")
+
+
 
 """                                                     ### Beheerder ###                     """
 @app.route("/dashboard-bhd")
