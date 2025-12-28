@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Evaringsdeskundige detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 <center>
@@ -10,6 +11,9 @@
 {% block content %}
 <h1>Ervaringsdeskundige detail</h1>
     <h1>Informatie over al ingeschreven ervaringsdeskundige</h1>
+    <div class="kaartje">
+        <input id="ch" type="checkbox">
+
         {% for profile in profile %}
             <h2>{{ profile.id }}: {{ profile.first_name }} {{ profile.last_name }}</h2>
             <p>Geslacht: {{ profile.gender }}</p>
@@ -17,16 +21,23 @@
             <p>Telefoon nummer: {{ profile.phone }}</p>
             <p>Postcode: {{ profile.postcode }}</p>
             <p>Beschikbaarheid: {{ profile.availability }}</p>
-            <p>Ondersteunende hulpmiddelen: {{ profile.assistive_tools }}</p>
-            <p>Introductie: {{ profile.intro }}</p>
-            <p>Notes: {{ profile.notes }}</p>
-            <p>Agreed terms: {{ profile.agreed_terms }}</p>
-            <p>Contact voorkeur: {{ profile.contact_preference }}</p>
-            <p>Type studie voorkeur: {{ profile.preferred_study_type }}</p>
-            <p>Heeft verzorger: {{ profile.has_guardian }}</p>
-            <p>Verzorger naam: {{ profile.guardian_name }}</p>
-            <p>Verzorger e-mail: {{ profile.guardian_email }}</p>
+            <div class="info">
+                <p>Ondersteunende hulpmiddelen: {{ profile.assistive_tools }}</p>
+                <p>Introductie: {{ profile.intro }}</p>
+                <p>Notes: {{ profile.notes }}</p>
+                <p>Agreed terms: {{ profile.agreed_terms }}</p>
+                <p>Contact voorkeur: {{ profile.contact_preference }}</p>
+                <p>Type studie voorkeur: {{ profile.preferred_study_type }}</p>
+                <p>Heeft verzorger: {{ profile.has_guardian }}</p>
+                <p>Verzorger naam: {{ profile.guardian_name }}</p>
+                <p>Verzorger e-mail: {{ profile.guardian_email }}</p>
+
+                <label for="ch">Minder weergeven</label>
+            </div>
+
+            <label for="ch">Meer weergeven</label>
         {%endfor%}
+    </div>
 {% endblock %}
 <center>
 </body>
