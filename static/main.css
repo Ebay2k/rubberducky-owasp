@@ -142,9 +142,37 @@
     text-decoration: none;
 }
 
+.kaartje {
+    background-color: #ffffff;
+    width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+}
 
+#ch {
+    display: none;
+}
 
+#ch:checked ~ .info {
+    display: block;
+}
 
+#ch:checked ~ label {
+    display: none;
+}
 
+.info {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #273F53;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
 
 
