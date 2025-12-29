@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Organisatie detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
+<center>
+{% extends 'layout.html' %}
+{% block content %}
 <h1>Organisatie detail</h1>
     <h1>Informatie over al ingeschreven organisaties</h1>
         {% for organization in organization %}
@@ -16,5 +20,7 @@
             <p>Type organisatie: {{ organization.type }}</p>
             <p>Organisatie beschrijving: {{ organization.description }}</p>
         {%endfor%}
+{% endblock %}
+</center>
 </body>
 </html>
