@@ -161,7 +161,9 @@ def bhd_ev_detail():
     profile = profiles.get_profile()
     return render_template("/bhd-ev-detail.html", profile=profile)
 
-
+@app.route("/bhd-goedkeuringen")
+def bhd_goedkeuringen():
+    return render_template("/bhd-goedkeuringen.html")
 
 
 if __name__ == "__main__":
