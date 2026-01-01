@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
+
+<div class="container">
+    <a href="{{ url_for('ev_aanvragen') }}" class="back-link">← Terug naar overzicht</a>
+    
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">{{ study.title }}</h1>
+            <p class="detail-organization">{{ study.organization_name }}</p>
+            <span class="status-badge status-{{ study.status }}">{{ study.status }}</span>
+        </div>
+        
+        <div class="detail-content">
+            <section class="detail-section">
+                <h2>Beschrijving</h2>
+                <p class="detail-description">{{ study.description }}</p>
+            </section>
+            
+            <section class="detail-section">
+                <h2>Onderzoeksdetails</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Type onderzoek:</span>
+                        <span class="detail-value">{{ study.study_type or 'Niet opgegeven' }}</span>
+                    </div>
+                    
+                    {% if study.location %}
+                    <div class="detail-info-item">
+                        <span class="detail-label">Locatie:</span>
+                        <span class="detail-value">{{ study.location }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="detail-info-item">
+                        <span class="detail-label">Startdatum:</span>
+                        <span class="detail-value">{{ study.start_date or 'Nog niet bekend' }}</span>
+                    </div>
+                    
+                    <div class="detail-info-item">
+                        <span class="detail-label">Einddatum:</span>
+                        <span class="detail-value">{{ study.end_date or 'Nog niet bekend' }}</span>
+                    </div>
+                    
+                    {% if study.age_min or study.age_max %}
+                    <div class="detail-info-item">
+                        <span class="detail-label">Leeftijdscategorie:</span>
+                        <span class="detail-value">{{ study.age_min or '0' }} - {{ study.age_max or '99+' }} jaar</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+            
+            {% if study.disabilities %}
+            <section class="detail-section">
+                <h2>Doelgroep</h2>
+                <div class="disabilities-list-detail">
+                    {% for disability in study.disabilities %}
+                    <span class="disability-tag-large">{{ disability }}</span>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+            
+            {% if study.has_reward and study.reward %}
+            <section class="detail-section reward-section">
+                <h2>Beloning</h2>
+                <div class="reward-badge-large">
+                    💰 {{ study.reward }}
+                </div>
+            </section>
+            {% endif %}
+            
+            <section class="detail-section enrollment-section">
+                {% if study.is_enrolled %}
+                    <div class="enrolled-message-large">
+                        ✓ Je bent al ingeschreven voor dit onderzoek
+                    </div>
+                    <p class="enrolled-info">De organisatie zal contact met je opnemen over verdere details.</p>
+                {% else %}
+                    <h2>Interesse?</h2>
+                    <p>Door je in te schrijven laat je de organisatie weten dat je graag wilt meedoen aan dit onderzoek.</p>
+                    <form method="POST" action="{{ url_for('enroll_study', study_id=study.id) }}">
+                        <button type="submit" class="enroll-button-large" 
+                                {% if not study.available or study.status != 'goedgekeurd' %}disabled{% endif %}>
+                            {% if not study.available %}
+                                Onderzoek gesloten
+                            {% elif study.status != 'goedgekeurd' %}
+                                Nog niet beschikbaar
+                            {% else %}
+                                Inschrijven voor dit onderzoek
+                            {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
