@@ -223,14 +223,6 @@ def ev_profiel():
     if session.get("role") != "expert":
         return "Geen Toegang", 403
 
-    return render_template("/ev-profiel.html")
-
-
-@app.route("/ev-profiel")
-def ev_profiel():
-    if session.get("role") != "expert":
-        return "Geen Toegang", 403
-
     user_id = session.get('user_id')
 
     db = Database('data/app.db')
