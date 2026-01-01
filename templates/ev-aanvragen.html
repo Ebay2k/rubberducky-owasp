@@ -40,3 +40,28 @@
                     </div>
                     {% endif %}
                 </div>
+
+                <div class="study-description-short">
+                    {{ study.description[:150] }}{% if study.description|length > 150 %}...{% endif %}
+                </div>
+
+                {% if study.has_reward and study.reward %}
+                <div class="reward-badge">
+                    💰 {{ study.reward }}
+                </div>
+                {% endif %}
+
+                <a href="{{ url_for('ev_aanvraag_detail', study_id=study.id) }}" class="details-button">
+                    Details bekijken
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-studies">
+            <h2>Geen onderzoeken beschikbaar</h2>
+            <p>Er zijn momenteel geen onderzoeken die passen bij jouw profiel.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
