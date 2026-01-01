@@ -1,16 +1,42 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <title>Aanvragen Ervaringsdeskundige</title>
-</head>
-<body>
-<h1>Hier komen de aanvragen waarop de ervaringsdeskundige kunnen reageren</h1>
-    <h1>Hieronder ff een voorbeeld</h1>
-        {%for study in study%}
-            <h2>{{ study.id }}: {{ study.title }}</h2>
-            <p>Status: {{ study.status }}</p>
-            <p>{{ study.description }}</p>
-        {%endfor%}
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
+
+<div class="container">
+    <h1 class="page-title">Beschikbare Onderzoeken</h1>
+    <p class="subtitle">Onderzoeken die passen bij jouw profiel en voorkeuren</p>
+    
+    {% if studies %}
+        <div class="studies-grid">
+            {% for study in studies %}
+            <div class="study-card">
+                <div class="study-header">
+                    <h2 class="study-title">{{ study.title }}</h2>
+                    <p class="study-organization">{{ study.organization_name }}</p>
+                </div>
+                
+                <div class="study-info">
+                    <div class="info-row">
+                        <span class="info-label">Type:</span>
+                        <span class="info-value">{{ study.study_type or 'Niet opgegeven' }}</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Periode:</span>
+                        <span class="info-value">
+                            {{ study.start_date or 'TBD' }} tot {{ study.end_date or 'TBD' }}
+                        </span>
+                    </div>
+                    
+                    {% if study.disabilities %}
+                    <div class="info-row">
+                        <span class="info-label">Doelgroep:</span>
+                        <div class="disabilities-list">
+                            {% for disability in study.disabilities %}
+                            <span class="disability-tag">{{ disability }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
