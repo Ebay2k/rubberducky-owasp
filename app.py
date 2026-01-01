@@ -1,6 +1,6 @@
 import os
-
-from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_session import Session
 from data.database import Database
 from models.user import User
@@ -78,8 +78,143 @@ def ev_aanvragen():
     if session.get("role") != "expert":
         return "Geen Toegang", 403
 
-    study = studies.get_study()
-    return render_template("/ev-aanvragen.html", study=study)
+    user_id = session.get('user_id')
+    
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+        
+        # Haal het profiel van de gebruiker op
+        cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
+        profile = cur.fetchone()
+        
+        if not profile:
+            return "Profiel niet gevonden", 404
+        
+        profile_id = profile['id']
+        
+        # Haal alle goedgekeurde EN nieuwe studies op
+        cur.execute('''
+            SELECT 
+                s.*,
+                o.name as organization_name
+            FROM studies s
+            JOIN organizations o ON s.organization_id = o.id
+            WHERE s.status IN ('goedgekeurd', 'nieuw') AND s.available = 1
+            ORDER BY s.start_date DESC
+        ''')
+        studies = cur.fetchall()
+        
+        # Verrijk met extra informatie
+        studies_data = []
+        for study in studies:
+            study_dict = dict(study)
+            
+            # Haal disabilities op voor deze study
+            cur.execute('''
+                SELECT d.name
+                FROM study_disabilities sd
+                JOIN disabilities d ON sd.disability_id = d.id
+                WHERE sd.study_id = ?
+            ''', (study['id'],))
+            disabilities = [row['name'] for row in cur.fetchall()]
+            study_dict['disabilities'] = disabilities
+            
+            studies_data.append(study_dict)
+    
+    return render_template("ev-aanvragen.html", studies=studies_data)
+
+
+@app.route("/ev-aanvragen/<int:study_id>")
+def ev_aanvraag_detail(study_id):
+    if session.get("role") != "expert":
+        return "Geen Toegang", 403
+
+    user_id = session.get('user_id')
+    
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+        
+        # Haal het profiel van de gebruiker op
+        cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
+        profile = cur.fetchone()
+        
+        if not profile:
+            return "Profiel niet gevonden", 404
+        
+        profile_id = profile['id']
+        
+        # Haal de studie op
+        cur.execute('''
+            SELECT 
+                s.*,
+                o.name as organization_name
+            FROM studies s
+            JOIN organizations o ON s.organization_id = o.id
+            WHERE s.id = ?
+        ''', (study_id,))
+        study = cur.fetchone()
+        
+        if not study:
+            return "Onderzoek niet gevonden", 404
+        
+        study_dict = dict(study)
+        
+        # Haal disabilities op
+        cur.execute('''
+            SELECT d.name
+            FROM study_disabilities sd
+            JOIN disabilities d ON sd.disability_id = d.id
+            WHERE sd.study_id = ?
+        ''', (study_id,))
+        disabilities = [row['name'] for row in cur.fetchall()]
+        study_dict['disabilities'] = disabilities
+        
+        # Check of de gebruiker al is ingeschreven
+        cur.execute('''
+            SELECT id FROM enrollments
+            WHERE study_id = ? AND profile_id = ?
+        ''', (study_id, profile_id))
+        study_dict['is_enrolled'] = cur.fetchone() is not None
+    
+    return render_template("ev-aanvraag-detail.html", study=study_dict)
+
+
+# Route om in te schrijven op een onderzoek
+@app.route('/ev-aanvragen/<int:study_id>/enroll', methods=['POST'])
+def enroll_study(study_id):
+    if session.get("role") != "expert":
+        return "Geen Toegang", 403
+    
+    user_id = session.get('user_id')
+    
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+        
+        # Haal het profiel van de gebruiker op
+        cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
+        profile = cur.fetchone()
+        
+        if not profile:
+            return "Profiel niet gevonden", 404
+        
+        profile_id = profile['id']
+        
+        try:
+            # Maak de inschrijving aan
+            cur.execute('''
+                INSERT INTO enrollments (study_id, profile_id, status)
+                VALUES (?, ?, 'nieuw')
+            ''', (study_id, profile_id))
+            con.commit()
+            
+            flash('Je bent succesvol ingeschreven voor het onderzoek!', 'success')
+        except sqlite3.IntegrityError:
+            flash('Je bent al ingeschreven voor dit onderzoek.', 'warning')
+    
+    return redirect(url_for('ev_aanvraag_detail', study_id=study_id))
 
 @app.route("/ev-profiel")
 def ev_profiel():
