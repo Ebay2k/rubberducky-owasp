@@ -65,6 +65,8 @@ def login():
 
     return render_template("login.html")
 
+
+
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
 def dashboard_ev():
@@ -222,6 +224,48 @@ def ev_profiel():
         return "Geen Toegang", 403
 
     return render_template("/ev-profiel.html")
+
+
+@app.route("/ev-profiel")
+def ev_profiel():
+    if session.get("role") != "expert":
+        return "Geen Toegang", 403
+
+    user_id = session.get('user_id')
+
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+
+        # Haal het profiel van de gebruiker op
+        cur.execute('''
+            SELECT 
+                p.*,
+                u.email
+            FROM profiles p
+            JOIN users u ON u.id = p.user_id
+            WHERE p.user_id = ?
+        ''', (user_id,))
+
+        profile = cur.fetchone()
+
+        if not profile:
+            return "Profiel niet gevonden", 404
+
+        profile_dict = dict(profile)
+
+        # Haal de beperkingen van de gebruiker op
+        cur.execute('''
+            SELECT d.name, d.category
+            FROM profile_disabilities pd
+            JOIN disabilities d ON pd.disability_id = d.id
+            WHERE pd.profile_id = ?
+        ''', (profile['id'],))
+
+        disabilities = [{'name': row['name'], 'category': row['category']} for row in cur.fetchall()]
+        profile_dict['disabilities'] = disabilities
+
+    return render_template("ev-profiel.html", profile=profile_dict)
 
 
 """                                                     ### Organisaties ###                """
