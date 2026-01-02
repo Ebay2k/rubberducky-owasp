@@ -18,6 +18,27 @@ class Organization:
             con.commit()
             return cur.fetchall()
 
+    def get_organization_by_id(self, organization_id):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM organizations WHERE id = ?", (organization_id,))
+            return cur.fetchone()
+
+    def update_organization(self, organization_id, type, website, description, contact_person, email, phone):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("""
+            UPDATE organizations SET
+                 type = ?, 
+                 website = ?, 
+                 description = ?, 
+                 contact_person = ?, 
+                 email = ?, 
+                 phone = ? 
+                 WHERE id = ?
+            """, (type, website, description, contact_person, email, phone, organization_id))
+            con.commit()
+
     def get_forms(self):
         with self.db.connect() as con:
             cur = con.cursor()

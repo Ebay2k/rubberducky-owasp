@@ -240,12 +240,26 @@ def org_aanvragen():
     forms = organizations.get_forms()
     return render_template("/org-aanvragen.html", forms=forms)
 
-@app.route("/org-profiel")
+@app.route("/org-profiel", methods=["GET", "POST"])
 def org_profiel():
     if session.get("role") != "organization":
         return "Geen Toegang", 403
 
-    return render_template("/org-profiel.html")
+    organization_id = session.get("organization_id")
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        description = request.form.get("description")
+        type = request.form.get("type")
+        website = request.form.get("website")
+        contact_person = request.form.get("contact_person")
+
+        organizations.update_organization(organization_id, type, website, description, contact_person, email, phone)
+        return redirect(url_for("org_profiel"))
+
+    organization = organizations.get_organization_by_id(organization_id)
+    return render_template("/org-profiel.html", organization=organization)
 
 @app.route("/org-aanvragen/<int:form_id>", methods=["GET", "POST"])
 def org_aanvraag_edit(form_id):
@@ -284,20 +298,28 @@ def org_aanvraag_nieuw():
 """                                                     ### Beheerder ###                     """
 @app.route("/dashboard-bhd")
 def dashboard_bhd():
+    if session.get("role") != "admin":
+        return "Geen Toegang", 403
     return render_template("/dashboard-bhd.html")
 
 @app.route("/bhd-org-detail")
 def bhd_org_detail():
+    if session.get("role") != "admin":
+        return "Geen Toegang", 403
     organization = organizations.get_organization()
     return render_template("/bhd-org-detail.html", organization=organization)
 
 @app.route("/bhd-ev-detail")
 def bhd_ev_detail():
+    if session.get("role") != "admin":
+        return "Geen Toegang", 403
     profile = profiles.get_profile()
     return render_template("/bhd-ev-detail.html", profile=profile)
 
 @app.route("/bhd-goedkeuringen")
 def bhd_goedkeuringen():
+    if session.get("role") != "admin":
+        return "Geen Toegang", 403
     return render_template("/bhd-goedkeuringen.html")
 
 

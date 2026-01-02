@@ -4,7 +4,51 @@
     <meta charset="UTF-8">
     <title>Profiel gegevens</title>
 </head>
+
 <body>
-<h1>Profiel gegevens</h1>
+
+<h1>Organisatieprofiel wijzigen</h1>
+
+<form method="POST">
+    <label>
+        E-mail: <input type="email" name="email"
+                    value="{{ organization.email }}" required>
+    </label>
+    <br><br>
+
+    <label>
+        Telefoon nummer: <input type="tel" name="phone"
+                    value="{{ organization.phone }}" required>
+    </label>
+    <br><br>
+
+    <label>
+        Website: <input type="url" name="website"
+                    value="{{ organization.website }}">
+    </label>
+    <br><br>
+
+    <label>
+        Type organisatie:
+        <select name="type" required>
+            <option value="non-profit" > {{ "selected" if organization.type == "non-profit" }}
+            Non-profit</option>
+
+            <option value="commercieel" > {{ "selected" if organization.type == "commercieel" }}
+                Commercieel</option>
+        </select>
+    </label>
+    <br><br>
+
+    <label>
+        Beschrijving: <textarea name="description">{{ organization.description }}</textarea>
+    </label>
+    <br><br>
+
+    <button type="submit">Wijzigingen opslaan?</button>
+    <a href="{{ url_for('org_aanvragen') }}">Annuleren</a>
+
+</form>
+
 </body>
 </html>
