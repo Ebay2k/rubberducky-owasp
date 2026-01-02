@@ -15,30 +15,42 @@
         <input id="ch" type="checkbox">
 
         {% for profile in profile %}
-            <h2>{{ profile.id }}: {{ profile.first_name }} {{ profile.last_name }}</h2>
-            <p>Geslacht: {{ profile.gender }}</p>
-            <p>Geboorte Datum: {{ profile.birth_date }}</p>
-            <p>Telefoon nummer: {{ profile.phone }}</p>
-            <p>Postcode: {{ profile.postcode }}</p>
-            <p>Beschikbaarheid: {{ profile.availability }}</p>
-            <div class="info">
-                <p>Ondersteunende hulpmiddelen: {{ profile.assistive_tools }}</p>
-                <p>Introductie: {{ profile.intro }}</p>
-                <p>Notes: {{ profile.notes }}</p>
-                <p>Agreed terms: {{ profile.agreed_terms }}</p>
-                <p>Contact voorkeur: {{ profile.contact_preference }}</p>
-                <p>Type studie voorkeur: {{ profile.preferred_study_type }}</p>
-                <p>Heeft verzorger: {{ profile.has_guardian }}</p>
-                <p>Verzorger naam: {{ profile.guardian_name }}</p>
-                <p>Verzorger e-mail: {{ profile.guardian_email }}</p>
-
-                <label for="ch">Minder weergeven</label>
+            <div class="broodje">
+                <div class="augurk">
+                    <h2>{{ profile.id }}: {{ profile.first_name }} {{ profile.last_name }}</h2>
+                </div>
+                <div class="sla">
+                    <p>Geslacht: {{ profile.gender }}</p>
+                    <p>Geboorte Datum: {{ profile.birth_date }}</p>
+                    <p>Telefoon nummer: {{ profile.phone }}</p>
+                    <p>Postcode: {{ profile.postcode }}</p>
+                    <p>Beschikbaarheid: {{ profile.availability }}</p>
+                </div>
+            <div class="broodje2">
+                <label class="label" for="ch">Meer weergeven</label>
             </div>
-
-            <label for="ch">Meer weergeven</label>
+            </div>
+                <div class="info">
+                <div class="sla3">
+                <div class="sla2">
+                    <p>Ondersteunende hulpmiddelen: {{ profile.assistive_tools }}</p>
+                    <p>Introductie: {{ profile.intro }}</p>
+                    <p>Notes: {{ profile.notes }}</p>
+                    <p>Agreed terms: {{ profile.agreed_terms }}</p>
+                    <p>Contact voorkeur: {{ profile.contact_preference }}</p>
+                    <p>Type studie voorkeur: {{ profile.preferred_study_type }}</p>
+                    <p>Heeft verzorger: {{ profile.has_guardian }}</p>
+                    <p>Verzorger naam: {{ profile.guardian_name }}</p>
+                    <p>Verzorger e-mail: {{ profile.guardian_email }}</p>
+                </div>
+                    <div class="broodje2">
+                        <label class="label" for="ch">Minder weergeven</label>
+                    </div>
+                  </div>
+                </div>
         {%endfor%}
-    </div>
 {% endblock %}
+</div>
 <center>
 </body>
 </html>
