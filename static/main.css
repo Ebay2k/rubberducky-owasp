@@ -176,34 +176,34 @@ nav.navbar .navbar-nav {
 }
 
 .kaartje {
-    background-color: deeppink;
+    background-color: white;
     width: 450px;
 }
 
 .broodje {
     background-color: aqua;
     width: 400px;
-    border-top: 15px solid deeppink;
+    border-top: 15px solid white;
     border-bottom: 15px solid aqua;
 }
 
 .augurk {
-    background-color: limegreen;
+    background-color: aqua;
     width: 390px;
     border-top: 5px solid aqua;
 }
 .sla {
-    background-color: yellow;
+    background-color: aqua;
     width: 390px;
 }
 
 .sla2 {
-    background-color: yellow;
+    background-color: aqua;
     width: 390px;
 }
 
 .sla3 {
-    border-bottom: 15px solid darkgreen;
+    border-bottom: 15px solid aqua;
 }
 
 .info {
@@ -212,11 +212,12 @@ nav.navbar .navbar-nav {
     align-content: center;
     background-color: aqua;
 }
+
 .broodje2 {
-    background-color: purple;
+    background-color: aqua;
     align-content: center;
     width: 300px;
-    border-bottom: 5px solid purple;
+    border-bottom: 5px solid aqua;
 }
 
 #ch {
@@ -227,13 +228,13 @@ nav.navbar .navbar-nav {
     display: block;
 }
 
-#ch:checked ~ .label {
+#ch:checked ~ .broodje label {
     display: none;
 }
 
 
 
-.label {
+label {
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
