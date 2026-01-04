@@ -2,41 +2,21 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Profiel gegevens</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <title>Mijn Profiel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
 </head>
 <body>
 {% extends 'layout.html' %}
 {% block content %}
-<center>
-    <h1>Profiel gegevens</h1>
-    
-    <div class="profile-card">
-        <h2>Persoonlijke Informatie</h2>
-        
-        <div class="profile-field">
-            <h3>Leeftijd:</h3>
-            <p>25 jaar</p>
+
+<div class="container">
+    <a href="{{ url_for('dashboard_ev') }}" class="back-link">← Terug naar Dashboard</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Mijn Profiel</h1>
+            <p class="detail-organization">{{ profile.email }}</p>
         </div>
-        
-        <div class="profile-field">
-            <h3>Geslacht:</h3>
-            <p>Man</p>
-        </div>
-        
-        <div class="profile-field">
-            <h3>Beperkingen:</h3>
-            <p>Geen beperkingen</p>
-        </div>
-        
-        <div class="profile-field">
-            <h3>Voorkeuren:</h3>
-            <p>Sport, Muziek, Cultuur</p>
-        </div>
-        
-        <a href="/dashboard-ev" class="back-button">Terug naar Dashboard</a>
-    </div>
-</center>
 {% endblock %}
 </body>
 </html>
