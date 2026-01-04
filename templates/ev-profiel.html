@@ -73,6 +73,23 @@
                 </div>
                 {% endif %}
             </section>
+
+            <section class="detail-section">
+                <h2>Onderzoeksvoorkeuren</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Type onderzoek:</span>
+                        <span class="detail-value">{{ profile.preferred_study_type or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Beschikbaarheid:</span>
+                        <span class="detail-value">{{ profile.availability or 'Niet ingevuld' }}</span>
+                    </div>
+                </div>
+            </section>
+
+
 {% endblock %}
 </body>
 </html>
