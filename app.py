@@ -356,6 +356,16 @@ def bhd_goedkeuringen():
         return "Geen Toegang", 403
     return render_template("/bhd-goedkeuringen.html")
 
+""""                                                        ### LOGIN PAGE ###               """
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+        user = users.get_user_by_email(email)
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
