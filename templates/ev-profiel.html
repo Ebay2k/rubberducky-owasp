@@ -17,6 +17,42 @@
             <h1 class="detail-title">Mijn Profiel</h1>
             <p class="detail-organization">{{ profile.email }}</p>
         </div>
+
+        <div class="detail-content">
+            <section class="detail-section">
+                <h2>Persoonlijke Gegevens</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Naam:</span>
+                        <span class="detail-value">{{ profile.first_name }} {{ profile.last_name }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Geboortedatum:</span>
+                        <span class="detail-value">{{ profile.birth_date or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Geslacht:</span>
+                        <span class="detail-value">{{ profile.gender or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Postcode:</span>
+                        <span class="detail-value">{{ profile.postcode or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Telefoon:</span>
+                        <span class="detail-value">{{ profile.phone or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Contactvoorkeur:</span>
+                        <span class="detail-value">{{ profile.contact_preference or 'Niet ingevuld' }}</span>
+                    </div>
+                </div>
+            </section>
 {% endblock %}
 </body>
 </html>
