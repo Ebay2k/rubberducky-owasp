@@ -35,7 +35,7 @@ class Organization:
                  contact_person = ?, 
                  email = ?, 
                  phone = ? 
-                 WHERE id = ?
+                    WHERE id = ?
             """, (type, website, description, contact_person, email, phone, organization_id))
             con.commit()
 
@@ -55,18 +55,19 @@ class Organization:
         with self.db.connect() as con:
             cur = con.cursor()
             cur.execute("""
-            UPDATE studies SET title = ?,
+            UPDATE studies SET 
+                 title = ?,
                  status = ?,
                  description = ?, 
                  available = ? 
-                 WHERE id = ?""",
+                    WHERE id = ?""",
                  (title, status, description, available, form_id))
             con.commit()
 
-    def create_form(self, title, status, description, available, organization_id):
+    def create_form(self, title, description, available, organization_id):
         with self.db.connect() as con:
             cur = con.cursor()
             cur.execute("""
-            INSERT INTO studies (title, status, description, available, organization_id) VALUES (?, ?, ?, ?, ?)""",
-                 (title, status, description, available, organization_id))
+            INSERT INTO studies (title, description, available, organization_id) VALUES (?, ?, ?, ?)""",
+                 (title, description, available, organization_id))
             con.commit()
