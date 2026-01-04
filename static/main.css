@@ -9,16 +9,16 @@ html {
 }
 
 nav.navbar {
-    margin: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 nav.navbar .container {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    padding-left: 40px !important;
-    padding-right: 40px !important;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 nav.navbar .navbar-brand {
@@ -176,11 +176,48 @@ nav.navbar .navbar-nav {
 }
 
 .kaartje {
-    background-color: #ffffff;
+    background-color: white;
+    width: 450px;
+}
+
+.broodje {
+    background-color: aqua;
     width: 400px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-top: 15px solid white;
+    border-bottom: 15px solid aqua;
+}
+
+.augurk {
+    background-color: aqua;
+    width: 390px;
+    border-top: 5px solid aqua;
+}
+.sla {
+    background-color: aqua;
+    width: 390px;
+}
+
+.sla2 {
+    background-color: aqua;
+    width: 390px;
+}
+
+.sla3 {
+    border-bottom: 15px solid aqua;
+}
+
+.info {
+    display: none;
+    width: 400px;
+    align-content: center;
+    background-color: aqua;
+}
+
+.broodje2 {
+    background-color: aqua;
+    align-content: center;
+    width: 300px;
+    border-bottom: 5px solid aqua;
 }
 
 #ch {
@@ -191,13 +228,11 @@ nav.navbar .navbar-nav {
     display: block;
 }
 
-#ch:checked ~ label {
+#ch:checked ~ .broodje label {
     display: none;
 }
 
-.info {
-    display: none;
-}
+
 
 label {
     display: inline-block;
