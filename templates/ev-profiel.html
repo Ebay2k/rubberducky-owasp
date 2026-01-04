@@ -89,6 +89,37 @@
                 </div>
             </section>
 
+            {% if profile.intro %}
+            <section class="detail-section">
+                <h2>Introductie</h2>
+                <p class="detail-description">{{ profile.intro }}</p>
+            </section>
+            {% endif %}
+
+            {% if profile.has_guardian %}
+            <section class="detail-section">
+                <h2>Voogd/Begeleider</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Naam:</span>
+                        <span class="detail-value">{{ profile.guardian_name or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">E-mail:</span>
+                        <span class="detail-value">{{ profile.guardian_email or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Telefoon:</span>
+                        <span class="detail-value">{{ profile.guardian_phone or 'Niet ingevuld' }}</span>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 </body>
