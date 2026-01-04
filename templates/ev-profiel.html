@@ -2,41 +2,125 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Profiel gegevens</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <title>Mijn Profiel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
 </head>
 <body>
 {% extends 'layout.html' %}
 {% block content %}
-<center>
-    <h1>Profiel gegevens</h1>
-    
-    <div class="profile-card">
-        <h2>Persoonlijke Informatie</h2>
-        
-        <div class="profile-field">
-            <h3>Leeftijd:</h3>
-            <p>25 jaar</p>
+
+<div class="container">
+    <a href="{{ url_for('dashboard_ev') }}" class="back-link">← Terug naar Dashboard</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Mijn Profiel</h1>
+            <p class="detail-organization">{{ profile.email }}</p>
         </div>
-        
-        <div class="profile-field">
-            <h3>Geslacht:</h3>
-            <p>Man</p>
+
+        <div class="detail-content">
+            <section class="detail-section">
+                <h2>Persoonlijke Gegevens</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Naam:</span>
+                        <span class="detail-value">{{ profile.first_name }} {{ profile.last_name }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Geboortedatum:</span>
+                        <span class="detail-value">{{ profile.birth_date or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Geslacht:</span>
+                        <span class="detail-value">{{ profile.gender or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Postcode:</span>
+                        <span class="detail-value">{{ profile.postcode or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Telefoon:</span>
+                        <span class="detail-value">{{ profile.phone or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Contactvoorkeur:</span>
+                        <span class="detail-value">{{ profile.contact_preference or 'Niet ingevuld' }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="detail-section">
+                <h2>Beperkingen & Hulpmiddelen</h2>
+                {% if profile.disabilities %}
+                    <div class="disabilities-list-detail">
+                        {% for disability in profile.disabilities %}
+                        <span class="disability-tag-large">{{ disability.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="detail-description">Geen beperkingen opgegeven</p>
+                {% endif %}
+
+                {% if profile.assistive_tools %}
+                <div class="detail-info-item" style="margin-top: 15px;">
+                    <span class="detail-label">Hulpmiddelen:</span>
+                    <span class="detail-value">{{ profile.assistive_tools }}</span>
+                </div>
+                {% endif %}
+            </section>
+
+            <section class="detail-section">
+                <h2>Onderzoeksvoorkeuren</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Type onderzoek:</span>
+                        <span class="detail-value">{{ profile.preferred_study_type or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Beschikbaarheid:</span>
+                        <span class="detail-value">{{ profile.availability or 'Niet ingevuld' }}</span>
+                    </div>
+                </div>
+            </section>
+
+            {% if profile.intro %}
+            <section class="detail-section">
+                <h2>Introductie</h2>
+                <p class="detail-description">{{ profile.intro }}</p>
+            </section>
+            {% endif %}
+
+            {% if profile.has_guardian %}
+            <section class="detail-section">
+                <h2>Voogd/Begeleider</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <span class="detail-label">Naam:</span>
+                        <span class="detail-value">{{ profile.guardian_name or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">E-mail:</span>
+                        <span class="detail-value">{{ profile.guardian_email or 'Niet ingevuld' }}</span>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <span class="detail-label">Telefoon:</span>
+                        <span class="detail-value">{{ profile.guardian_phone or 'Niet ingevuld' }}</span>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
         </div>
-        
-        <div class="profile-field">
-            <h3>Beperkingen:</h3>
-            <p>Geen beperkingen</p>
-        </div>
-        
-        <div class="profile-field">
-            <h3>Voorkeuren:</h3>
-            <p>Sport, Muziek, Cultuur</p>
-        </div>
-        
-        <a href="/dashboard-ev" class="back-button">Terug naar Dashboard</a>
     </div>
-</center>
+</div>
+
 {% endblock %}
 </body>
 </html>
