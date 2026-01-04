@@ -53,6 +53,26 @@
                     </div>
                 </div>
             </section>
+
+            <section class="detail-section">
+                <h2>Beperkingen & Hulpmiddelen</h2>
+                {% if profile.disabilities %}
+                    <div class="disabilities-list-detail">
+                        {% for disability in profile.disabilities %}
+                        <span class="disability-tag-large">{{ disability.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="detail-description">Geen beperkingen opgegeven</p>
+                {% endif %}
+
+                {% if profile.assistive_tools %}
+                <div class="detail-info-item" style="margin-top: 15px;">
+                    <span class="detail-label">Hulpmiddelen:</span>
+                    <span class="detail-value">{{ profile.assistive_tools }}</span>
+                </div>
+                {% endif %}
+            </section>
 {% endblock %}
 </body>
 </html>
