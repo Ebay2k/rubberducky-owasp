@@ -29,6 +29,8 @@ profiles = Profiles(DB_PATH)
 """                                                     ### HOME PAGE ###                   """
 @app.route("/")
 def index():
+    if session.get("role") != "admin":
+        return redirect(url_for("login"))
     return render_template("home.html")
 
 """                                                     ### LOGIN PAGE ###                   """
