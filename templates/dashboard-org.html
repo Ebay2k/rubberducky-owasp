@@ -3,16 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Organisatie</title>
+        <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    {% extends 'layout.html' %}
-    {% block content %}
-<h1>Dashboard van de Organisatie</h1>
-    <h1><a href="/">Home</a></h1>
-    <h1><a href="org-aanvragen">Aanvragen bekijken en aanpassen</a></h1>
-    <h1><a href="org-profiel">Profiel bekijken</a></h1>
-<p>Stukje tekst eronder.</p>
-    {% endblock %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 mb-5" aria-label="Hoofdnavigatie">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">Accessibility</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Wissel navigatie">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="/">Home</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-sm btn-outline-dark" href="/">Uitloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center mb-5">
+                <h1 class="display-6 fw-bold text-dark">Organisatie Dashboard</h1>
+                <p class="text-secondary">Welkom terug. Wat wilt u vandaag doen?</p>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Aanvragen Card -->
+            <div class="col-md-5 col-lg-4">
+                <a href="org-aanvragen" class="text-decoration-none card-link">
+                    <div class="card shadow-sm h-100 py-4 px-3 text-center bg-white">
+                        <div class="card-body">
+                            <!-- Changed to h2 for logical hierarchy after h1 -->
+                            <h2 class="h5 card-title text-dark">Studies Bekijken en Aanpassen</h2>
+                            <p class="card-text text-secondary small mt-2">Bekijk studies, maak nieuwe of pas al bestaande aan.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Profiel Card -->
+            <div class="col-md-5 col-lg-4">
+                <a href="org-profiel" class="text-decoration-none card-link">
+                    <div class="card shadow-sm h-100 py-4 px-3 text-center bg-white">
+                        <div class="card-body">
+                            <!-- Changed to h2 for logical hierarchy after h1 -->
+                            <h2 class="h5 card-title text-dark">Gegevens van de Organisatie</h2>
+                            <p class="card-text text-secondary small mt-2">Beheer de informatie van uw organisatie.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
