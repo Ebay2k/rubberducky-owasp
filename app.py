@@ -358,6 +358,12 @@ def bhd_goedkeuringen():
         return "Geen Toegang", 403
     return render_template("/bhd-goedkeuringen.html")
 
+@app.route("/bhd-org-aanmaken")
+def bhd_org_aanmaken():
+    if session.get("role") != "admin":
+        return "Geen Toegang", 403
+    return render_template("/bhd-org-aanmaken.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
