@@ -43,10 +43,18 @@ def login():
         user = users.get_user_by_email(email)
 
         if user is None:
-            return "Onbekende gebruiker", 403
+            flash("Onbekende gebruiker", "error")
+            return render_template("login.html")
 
         if user["password"] != password:
-            return "Onjuiste wachtwoord", 403
+            flash("Onjuist wachtwoord", "error")
+            return render_template("login.html")
+
+        if user["status"] == "nieuw":
+            flash(
+                "Je account wordt nog beoordeeld door een beheerder. Je ontvangt bericht zodra je account is goedgekeurd.",
+                "warning")
+            return render_template("login.html")
 
         session.clear()
         session["user_id"] = user["id"]
@@ -55,7 +63,6 @@ def login():
         if user["organization_id"] is not None:
             session["organization_id"] = user["organization_id"]
 
-        """    vanaf hier gaat het om de rollen     """
         if user["role"] == "admin":
             return redirect(url_for("dashboard_bhd"))
 
@@ -66,6 +73,144 @@ def login():
             return redirect(url_for("dashboard_org"))
 
     return render_template("login.html")
+
+
+"""                                                     ### LOGOUT ###                        """
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Je bent succesvol uitgelogd", "success")
+    return redirect(url_for("login"))
+
+"""                                                     ### REGISTRATIE ###         """
+
+@app.route("/registreer", methods=["GET", "POST"])
+def registreer():
+    if request.method == "POST":
+        step = request.form.get("step", "1")
+
+        if step == "1":
+            # Persoonsgegeven opslan
+            session["registratie"] = {
+                "first_name": request.form.get("first_name"),
+                "last_name": request.form.get("last_name"),
+                "email": request.form.get("email"),
+                "password": request.form.get("password"),
+                "postcode": request.form.get("postcode"),
+                "gender": request.form.get("gender"),
+                "phone": request.form.get("phone"),
+                "birth_date": request.form.get("birth_date"),
+            }
+            return redirect(url_for("registreer_stap2"))
+
+    return render_template("registreer-stap1.html")
+
+
+@app.route("/registreer/stap2", methods=["GET", "POST"])
+def registreer_stap2():
+    if "registratie" not in session:
+        return redirect(url_for("registreer"))
+
+    if request.method == "POST":
+        session["registratie"]["disabilities"] = request.form.getlist("disabilities")
+        session["registratie"]["assistive_tools"] = request.form.get("assistive_tools")
+        session["registratie"]["intro"] = request.form.get("intro")
+        session["registratie"]["contact_preference"] = request.form.get("contact_preference")
+        session["registratie"]["preferred_study_type"] = request.form.get("preferred_study_type")
+        session["registratie"]["availability"] = request.form.get("availability")
+        session["registratie"]["has_guardian"] = 1 if request.form.get("has_guardian") else 0
+
+        if session["registratie"]["has_guardian"]:
+            return redirect(url_for("registreer_stap3"))
+        else:
+            return redirect(url_for("registreer_stap4"))
+    # Beperkingen ophalen
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+        cur.execute('SELECT * FROM disabilities ORDER BY category, name')
+        disabilities = cur.fetchall()
+
+    return render_template("registreer-stap2.html", disabilities=disabilities)
+
+
+@app.route("/registreer/stap3", methods=["GET", "POST"])
+def registreer_stap3():
+    if "registratie" not in session:
+        return redirect(url_for("registreer"))
+
+    if request.method == "POST":
+        # Toezichthouder
+        session["registratie"]["guardian_name"] = request.form.get("guardian_name")
+        session["registratie"]["guardian_email"] = request.form.get("guardian_email")
+        session["registratie"]["guardian_phone"] = request.form.get("guardian_phone")
+        return redirect(url_for("registreer_stap4"))
+
+    return render_template("registreer-stap3.html")
+
+
+@app.route("/registreer/stap4", methods=["GET", "POST"])
+def registreer_stap4():
+    if "registratie" not in session:
+        return redirect(url_for("registreer"))
+
+    if request.method == "POST":
+        agreed_terms = request.form.get("agreed_terms")
+
+        if not agreed_terms:
+            flash("Je moet akkoord gaan met de voorwaarden", "error")
+            return render_template("registreer-stap4.html", data=session["registratie"])
+
+        # slaat alles op
+        data = session["registratie"]
+
+        db = Database('data/app.db')
+        with db.connect() as con:
+            cur = con.cursor()
+
+            # user create
+            cur.execute('''
+                INSERT INTO users (email, password, role, status)
+                VALUES (?, ?, 'expert', 'nieuw')
+            ''', (data["email"], data["password"]))
+
+            user_id = cur.lastrowid
+
+            # profiel
+            cur.execute('''
+                INSERT INTO profiles
+                (user_id, first_name, last_name, postcode, gender, phone, birth_date,
+                 assistive_tools, intro, agreed_terms, has_guardian,
+                 guardian_name, guardian_email, guardian_phone,
+                 contact_preference, preferred_study_type, availability)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                user_id, data["first_name"], data["last_name"],
+                data["postcode"], data["gender"], data["phone"], data["birth_date"],
+                data.get("assistive_tools"), data.get("intro"),
+                data.get("has_guardian", 0),
+                data.get("guardian_name"), data.get("guardian_email"), data.get("guardian_phone"),
+                data.get("contact_preference"), data.get("preferred_study_type"), data.get("availability")
+            ))
+
+            profile_id = cur.lastrowid
+
+            # beperkingen
+            for disability_id in data.get("disabilities", []):
+                cur.execute('''
+                    INSERT INTO profile_disabilities (profile_id, disability_id)
+                    VALUES (?, ?)
+                ''', (profile_id, disability_id))
+
+            con.commit()
+
+        # verwijderd registratie uit sessie
+        session.pop("registratie", None)
+
+        flash("Registratie voltooid! Je account wordt beoordeeld door een beheerder.", "success")
+        return redirect(url_for("login"))
+
+    return render_template("registreer-stap4.html", data=session.get("registratie", {}))
 
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
@@ -85,8 +230,7 @@ def ev_aanvragen():
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
-        
-        # Haal het profiel van de gebruiker op
+
         cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
         profile = cur.fetchone()
         
@@ -94,8 +238,7 @@ def ev_aanvragen():
             return "Profiel niet gevonden", 404
         
         profile_id = profile['id']
-        
-        # Haal alle goedgekeurde EN nieuwe studies op
+
         cur.execute('''
             SELECT 
                 s.*,
@@ -106,13 +249,11 @@ def ev_aanvragen():
             ORDER BY s.start_date DESC
         ''')
         studies = cur.fetchall()
-        
-        # Verrijk met extra informatie
+
         studies_data = []
         for study in studies:
             study_dict = dict(study)
-            
-            # Haal disabilities op voor deze study
+
             cur.execute('''
                 SELECT d.name
                 FROM study_disabilities sd
@@ -137,8 +278,7 @@ def ev_aanvraag_detail(study_id):
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
-        
-        # Haal het profiel van de gebruiker op
+
         cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
         profile = cur.fetchone()
         
@@ -146,8 +286,7 @@ def ev_aanvraag_detail(study_id):
             return "Profiel niet gevonden", 404
         
         profile_id = profile['id']
-        
-        # Haal de studie op
+
         cur.execute('''
             SELECT 
                 s.*,
@@ -162,8 +301,7 @@ def ev_aanvraag_detail(study_id):
             return "Onderzoek niet gevonden", 404
         
         study_dict = dict(study)
-        
-        # Haal disabilities op
+
         cur.execute('''
             SELECT d.name
             FROM study_disabilities sd
@@ -172,8 +310,7 @@ def ev_aanvraag_detail(study_id):
         ''', (study_id,))
         disabilities = [row['name'] for row in cur.fetchall()]
         study_dict['disabilities'] = disabilities
-        
-        # Check of de gebruiker al is ingeschreven
+
         cur.execute('''
             SELECT id FROM enrollments
             WHERE study_id = ? AND profile_id = ?
@@ -183,7 +320,7 @@ def ev_aanvraag_detail(study_id):
     return render_template("ev-aanvraag-detail.html", study=study_dict)
 
 
-# Route om in te schrijven op een onderzoek
+# route om in te schrijven op een onderzoek
 @app.route('/ev-aanvragen/<int:study_id>/enroll', methods=['POST'])
 def enroll_study(study_id):
     if session.get("role") != "expert":
@@ -194,8 +331,7 @@ def enroll_study(study_id):
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
-        
-        # Haal het profiel van de gebruiker op
+
         cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
         profile = cur.fetchone()
         
@@ -205,7 +341,6 @@ def enroll_study(study_id):
         profile_id = profile['id']
         
         try:
-            # Maak de inschrijving aan
             cur.execute('''
                 INSERT INTO enrollments (study_id, profile_id, status)
                 VALUES (?, ?, 'nieuw')
@@ -223,7 +358,39 @@ def ev_profiel():
     if session.get("role") != "expert":
         return "Geen Toegang", 403
 
-    return render_template("/ev-profiel.html")
+    user_id = session.get('user_id')
+
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+
+        cur.execute('''
+            SELECT 
+                p.*,
+                u.email
+            FROM profiles p
+            JOIN users u ON u.id = p.user_id
+            WHERE p.user_id = ?
+        ''', (user_id,))
+
+        profile = cur.fetchone()
+
+        if not profile:
+            return "Profiel niet gevonden", 404
+
+        profile_dict = dict(profile)
+
+        cur.execute('''
+            SELECT d.name, d.category
+            FROM profile_disabilities pd
+            JOIN disabilities d ON pd.disability_id = d.id
+            WHERE pd.profile_id = ?
+        ''', (profile['id'],))
+
+        disabilities = [{'name': row['name'], 'category': row['category']} for row in cur.fetchall()]
+        profile_dict['disabilities'] = disabilities
+
+    return render_template("ev-profiel.html", profile=profile_dict)
 
 
 """                                                     ### Organisaties ###                """
@@ -328,6 +495,12 @@ def bhd_goedkeuringen():
     if session.get("role") != "admin":
         return "Geen Toegang", 403
     return render_template("/bhd-goedkeuringen.html")
+
+@app.route("/bhd-org-aanmaken")
+def bhd_org_aanmaken():
+    if session.get("role") != "admin":
+        return "Geen Toegang", 403
+    return render_template("/bhd-org-aanmaken.html")
 
 
 if __name__ == "__main__":

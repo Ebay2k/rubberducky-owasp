@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
 
 <div class="container">
+    <a href="{{ url_for('dashboard_ev') }}" class="back-link">← Terug naar Dashboard</a>
     <h1 class="page-title">Beschikbare Onderzoeken</h1>
     <p class="subtitle">Onderzoeken die passen bij jouw profiel en voorkeuren</p>
     
@@ -47,7 +48,7 @@
 
                 {% if study.has_reward and study.reward %}
                 <div class="reward-badge">
-                    💰 {{ study.reward }}
+                     {{ study.reward }}
                 </div>
                 {% endif %}
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Registreren - Stap 4</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
+</head>
+<body>
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <a href="{{ url_for('registreer_stap3') if data.get('has_guardian') else url_for('registreer_stap2') }}" class="back-link">← Terug</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Registreren als Ervaringsdeskundige</h1>
+            <p class="detail-organization">Stap 4 van 4: Bevestigen en Voorwaarden</p>
+        </div>
+
+        <form method="POST" class="detail-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <section class="detail-section">
+                <h2>Overzicht van je gegevens</h2>
+                <div class="detail-description">
+                    <p><strong>Naam:</strong> {{ data.first_name }} {{ data.last_name }}</p>
+                    <p><strong>E-mail:</strong> {{ data.email }}</p>
+                    <p><strong>Geboortedatum:</strong> {{ data.birth_date }}</p>
+                    <p><strong>Postcode:</strong> {{ data.postcode }}</p>
+                </div>
+            </section>
+            
+            <section class="detail-section">
+                <h2>Algemene Voorwaarden</h2>
+                <div class="detail-description">
+                    <p>Door je te registreren ga je akkoord met:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Het delen van je profielgegevens met organisaties voor passende onderzoeken</li>
+                        <li>Het ontvangen van uitnodigingen voor onderzoeken</li>
+                        <li>De verwerking van je persoonsgegevens volgens de AVG</li>
+                        <li>Het feit dat je profiel wordt beoordeeld door een beheerder</li>
+                    </ul>
+                </div>
+                
+                <label style="display: flex; align-items: center; margin-top: 20px; cursor: pointer; font-weight: bold;">
+                    <input type="checkbox" name="agreed_terms" value="1" style="margin-right: 10px;" required>
+                    Ik ga akkoord met bovenstaande voorwaarden *
+                </label>
+            </section>
+            
+            <section class="detail-section enrollment-section">
+                <button type="submit" class="enroll-button-large">
+                    Registratie voltooien
+                </button>
+                <p class="enrolled-info" style="margin-top: 15px;">
+                    Na registratie wordt je account beoordeeld door een beheerder. Je ontvangt bericht zodra je account is goedgekeurd.
+                </p>
+            </section>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

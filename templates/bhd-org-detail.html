@@ -14,7 +14,7 @@
     <h1>Informatie over al ingeschreven organisaties</h1>
         {% for organization in organization %}
             <h2>{{ organization.id }}: {{ organization.name }}</h2>
-            <p>Contact persoon: {{ organization.contact_pers4on }}</p>
+            <p>Contact persoon: {{ organization.contact_person }}</p>
             <p>E-mail: {{ organization.email }}</p>
             <p>Telefoon nummer: {{ organization.phone }}</p>
             <p>Website: {{ organization.website }}</p>

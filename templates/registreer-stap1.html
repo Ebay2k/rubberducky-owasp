@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Registreren - Stap 1</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
+</head>
+<body>
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <a href="{{ url_for('login') }}" class="back-link">← Terug naar login</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Registreren als Ervaringsdeskundige</h1>
+            <p class="detail-organization">Stap 1 van 4: Persoonsgegevens</p>
+        </div>
+
+        <form method="POST" class="detail-content">
+            <input type="hidden" name="step" value="1">
+
+            <section class="detail-section">
+                <h2>Persoonlijke Gegevens</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="first_name">Voornaam *</label>
+                        <input type="text" id="first_name" name="first_name" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="last_name">Achternaam *</label>
+                        <input type="text" id="last_name" name="last_name" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="email">E-mailadres *</label>
+                        <input type="email" id="email" name="email" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="password">Wachtwoord *</label>
+                        <input type="password" id="password" name="password" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="birth_date">Geboortedatum *</label>
+                        <input type="date" id="birth_date" name="birth_date" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="gender">Geslacht *</label>
+                        <select id="gender" name="gender" class="detail-value" required>
+                            <option value="">Selecteer...</option>
+                            <option value="M">Man</option>
+                            <option value="V">Vrouw</option>
+                            <option value="X">Anders/Zeg ik liever niet</option>
+                        </select>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="postcode">Postcode *</label>
+                        <input type="text" id="postcode" name="postcode" class="detail-value"
+                               pattern="[0-9]{4}[A-Za-z]{2}" placeholder="1234AB" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="phone">Telefoonnummer *</label>
+                        <input type="tel" id="phone" name="phone" class="detail-value"
+                               placeholder="+31 6 12345678" required>
+                    </div>
+                </div>
+            </section>
+
+            <section class="detail-section enrollment-section">
+                <button type="submit" class="enroll-button-large">
+                    Volgende stap →
+                </button>
+            </section>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
