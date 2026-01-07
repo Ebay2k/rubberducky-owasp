@@ -73,7 +73,7 @@ def registreer():
         step = request.form.get("step", "1")
 
         if step == "1":
-            # Persoonsgegeven opslan 
+            # Persoonsgegeven opslan
             session["registratie"] = {
                 "first_name": request.form.get("first_name"),
                 "last_name": request.form.get("last_name"),
@@ -130,6 +130,71 @@ def registreer_stap3():
         return redirect(url_for("registreer_stap4"))
 
     return render_template("registreer-stap3.html")
+
+
+@app.route("/registreer/stap4", methods=["GET", "POST"])
+def registreer_stap4():
+    if "registratie" not in session:
+        return redirect(url_for("registreer"))
+
+    if request.method == "POST":
+        agreed_terms = request.form.get("agreed_terms")
+
+        if not agreed_terms:
+            flash("Je moet akkoord gaan met de voorwaarden", "error")
+            return render_template("registreer-stap4.html", data=session["registratie"])
+
+        # slaat alles op
+        data = session["registratie"]
+
+        db = Database('data/app.db')
+        with db.connect() as con:
+            cur = con.cursor()
+
+            # user create
+            cur.execute('''
+                INSERT INTO users (email, password, role, status)
+                VALUES (?, ?, 'expert', 'nieuw')
+            ''', (data["email"], data["password"]))
+
+            user_id = cur.lastrowid
+
+            # profiel
+            cur.execute('''
+                INSERT INTO profiles
+                (user_id, first_name, last_name, postcode, gender, phone, birth_date,
+                 assistive_tools, intro, agreed_terms, has_guardian,
+                 guardian_name, guardian_email, guardian_phone,
+                 contact_preference, preferred_study_type, availability)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                user_id, data["first_name"], data["last_name"],
+                data["postcode"], data["gender"], data["phone"], data["birth_date"],
+                data.get("assistive_tools"), data.get("intro"),
+                data.get("has_guardian", 0),
+                data.get("guardian_name"), data.get("guardian_email"), data.get("guardian_phone"),
+                data.get("contact_preference"), data.get("preferred_study_type"), data.get("availability")
+            ))
+
+            profile_id = cur.lastrowid
+
+            # beperkingen
+            for disability_id in data.get("disabilities", []):
+                cur.execute('''
+                    INSERT INTO profile_disabilities (profile_id, disability_id)
+                    VALUES (?, ?)
+                ''', (profile_id, disability_id))
+
+            con.commit()
+
+        # verwijderd registratie uit sessie
+        session.pop("registratie", None)
+
+        flash("Registratie voltooid! Je account wordt beoordeeld door een beheerder.", "success")
+        return redirect(url_for("login"))
+
+    return render_template("registreer-stap4.html", data=session.get("registratie", {}))
+
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
 def dashboard_ev():
