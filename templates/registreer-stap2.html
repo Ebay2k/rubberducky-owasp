@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Registreren - Stap 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
+</head>
+<body>
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <a href="{{ url_for('registreer') }}" class="back-link">← Terug</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Registreren als Ervaringsdeskundige</h1>
+            <p class="detail-organization">Stap 2 van 4: Beperkingen en Voorkeuren</p>
+        </div>
+
+        <form method="POST" class="detail-content">
+            <section class="detail-section">
+                <h2>Beperkingen *</h2>
+                <p class="detail-description">Selecteer de beperkingen die op jou van toepassing zijn:</p>
+
+                {% set current_category = '' %}
+                {% for disability in disabilities %}
+                    {% if disability.category != current_category %}
+                        {% if current_category != '' %}</div>{% endif %}
+                        <h3 style="color: #273F53; margin-top: 20px;">{{ disability.category }}</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                        {% set current_category = disability.category %}
+                    {% endif %}
+
+                    <label style="display: flex; align-items: center; background: #f8f9fa; padding: 10px; border-radius: 5px; cursor: pointer;">
+                        <input type="checkbox" name="disabilities" value="{{ disability.id }}" style="margin-right: 8px;">
+                        {{ disability.name }}
+                    </label>
+                {% endfor %}
+                </div>
+            </section>
+
+            <section class="detail-section">
+                <h2>Hulpmiddelen</h2>
+                <div class="detail-info-item">
+                    <label class="detail-label" for="assistive_tools">Welke hulpmiddelen gebruik je?</label>
+                    <textarea id="assistive_tools" name="assistive_tools" class="detail-value"
+                              rows="3" placeholder="Bijvoorbeeld: Screenreader, spraakherkenning, etc."></textarea>
+                </div>
+            </section>
+
+            <section class="detail-section">
+                <h2>Voorkeuren</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="contact_preference">Contactvoorkeur *</label>
+                        <select id="contact_preference" name="contact_preference" class="detail-value" required>
+                            <option value="">Selecteer...</option>
+                            <option value="e-mail">E-mail</option>
+                            <option value="telefoon">Telefoon</option>
+                        </select>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="preferred_study_type">Type onderzoek *</label>
+                        <select id="preferred_study_type" name="preferred_study_type" class="detail-value" required>
+                            <option value="">Selecteer...</option>
+                            <option value="online">Online</option>
+                            <option value="telefonisch">Telefonisch</option>
+                            <option value="op locatie">Op locatie</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="detail-info-item" style="margin-top: 15px;">
+                    <label class="detail-label" for="availability">Beschikbaarheid</label>
+                    <textarea id="availability" name="availability" class="detail-value"
+                              rows="2" placeholder="Bijvoorbeeld: Ma-Wo overdag, avonden"></textarea>
+                </div>
+
+                <div class="detail-info-item" style="margin-top: 15px;">
+                    <label class="detail-label" for="intro">Introductie</label>
+                    <textarea id="intro" name="intro" class="detail-value"
+                              rows="3" placeholder="Vertel iets over jezelf..."></textarea>
+                </div>
+            </section>
+
+            <section class="detail-section">
+                <h2>Toezichthouder</h2>
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" name="has_guardian" value="1" style="margin-right: 8px;">
+                    Ik heb een voogd of begeleider
+                </label>
+            </section>
+
+            <section class="detail-section enrollment-section">
+                <button type="submit" class="enroll-button-large">
+                    Volgende stap →
+                </button>
+            </section>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
