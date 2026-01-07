@@ -213,8 +213,7 @@ def ev_aanvragen():
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
-        
-        # Haal het profiel van de gebruiker op
+
         cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
         profile = cur.fetchone()
         
@@ -222,8 +221,7 @@ def ev_aanvragen():
             return "Profiel niet gevonden", 404
         
         profile_id = profile['id']
-        
-        # Haal alle goedgekeurde EN nieuwe studies op
+
         cur.execute('''
             SELECT 
                 s.*,
@@ -234,13 +232,11 @@ def ev_aanvragen():
             ORDER BY s.start_date DESC
         ''')
         studies = cur.fetchall()
-        
-        # Verrijk met extra informatie
+
         studies_data = []
         for study in studies:
             study_dict = dict(study)
-            
-            # Haal disabilities op voor deze study
+
             cur.execute('''
                 SELECT d.name
                 FROM study_disabilities sd
@@ -265,8 +261,7 @@ def ev_aanvraag_detail(study_id):
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
-        
-        # Haal het profiel van de gebruiker op
+
         cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
         profile = cur.fetchone()
         
@@ -274,8 +269,7 @@ def ev_aanvraag_detail(study_id):
             return "Profiel niet gevonden", 404
         
         profile_id = profile['id']
-        
-        # Haal de studie op
+
         cur.execute('''
             SELECT 
                 s.*,
@@ -290,8 +284,7 @@ def ev_aanvraag_detail(study_id):
             return "Onderzoek niet gevonden", 404
         
         study_dict = dict(study)
-        
-        # Haal disabilities op
+
         cur.execute('''
             SELECT d.name
             FROM study_disabilities sd
@@ -300,8 +293,7 @@ def ev_aanvraag_detail(study_id):
         ''', (study_id,))
         disabilities = [row['name'] for row in cur.fetchall()]
         study_dict['disabilities'] = disabilities
-        
-        # Check of de gebruiker al is ingeschreven
+
         cur.execute('''
             SELECT id FROM enrollments
             WHERE study_id = ? AND profile_id = ?
@@ -311,7 +303,7 @@ def ev_aanvraag_detail(study_id):
     return render_template("ev-aanvraag-detail.html", study=study_dict)
 
 
-# Route om in te schrijven op een onderzoek
+# route om in te schrijven op een onderzoek
 @app.route('/ev-aanvragen/<int:study_id>/enroll', methods=['POST'])
 def enroll_study(study_id):
     if session.get("role") != "expert":
@@ -322,8 +314,7 @@ def enroll_study(study_id):
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
-        
-        # Haal het profiel van de gebruiker op
+
         cur.execute('SELECT id FROM profiles WHERE user_id = ?', (user_id,))
         profile = cur.fetchone()
         
@@ -333,7 +324,6 @@ def enroll_study(study_id):
         profile_id = profile['id']
         
         try:
-            # Maak de inschrijving aan
             cur.execute('''
                 INSERT INTO enrollments (study_id, profile_id, status)
                 VALUES (?, ?, 'nieuw')
@@ -357,7 +347,6 @@ def ev_profiel():
     with db.connect() as con:
         cur = con.cursor()
 
-        # Haal het profiel van de gebruiker op
         cur.execute('''
             SELECT 
                 p.*,
@@ -374,7 +363,6 @@ def ev_profiel():
 
         profile_dict = dict(profile)
 
-        # Haal de beperkingen van de gebruiker op
         cur.execute('''
             SELECT d.name, d.category
             FROM profile_disabilities pd

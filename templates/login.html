@@ -3,18 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Inloggen</title>
-    <link rel="stylesheet" href="../static/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
-
 <body>
-<form method="POST" class="login-form">
-    <h1>Inloggen</h1>
-    <label>Gebruikersnaam: <input type="email" name="email"></label>
-    <br><br>
-    <label>Wachtwoord: <input type="password" name="password"></label>
-    <br><br>
-    <button type="submit">Inloggen</button>
-</form>
+{% extends 'layout.html' %}
+{% block content %}
 
+<div class="login-container">
+    <div class="login-card">
+        <h1>Inloggen</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" class="login-form">
+            <div class="form-group">
+                <label for="email">E-mailadres</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Wachtwoord</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-button">Inloggen</button>
+        </form>
+        
+        <div class="register-section">
+            <p class="register-text">Nog geen account?</p>
+            <a href="{{ url_for('registreer') }}" class="register-link">
+                Registreer als ervaringsdeskundige
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
 </body>
 </html>
