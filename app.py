@@ -87,6 +87,25 @@ def registreer():
 
     return render_template("registreer-stap1.html")
 
+
+@app.route("/registreer/stap2", methods=["GET", "POST"])
+def registreer_stap2():
+    if "registratie" not in session:
+        return redirect(url_for("registreer"))
+
+    if request.method == "POST":
+        session["registratie"]["disabilities"] = request.form.getlist("disabilities")
+        session["registratie"]["assistive_tools"] = request.form.get("assistive_tools")
+        session["registratie"]["intro"] = request.form.get("intro")
+        session["registratie"]["contact_preference"] = request.form.get("contact_preference")
+        session["registratie"]["preferred_study_type"] = request.form.get("preferred_study_type")
+        session["registratie"]["availability"] = request.form.get("availability")
+        session["registratie"]["has_guardian"] = 1 if request.form.get("has_guardian") else 0
+
+        if session["registratie"]["has_guardian"]:
+            return redirect(url_for("registreer_stap3"))
+        else:
+            return redirect(url_for("registreer_stap4"))
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
 def dashboard_ev():
