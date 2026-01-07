@@ -53,7 +53,7 @@ def login():
         if user["organization_id"] is not None:
             session["organization_id"] = user["organization_id"]
 
-        """    vanaf hier gaat het om de rollen     """
+
         if user["role"] == "admin":
             return redirect(url_for("dashboard_bhd"))
 
@@ -65,7 +65,27 @@ def login():
 
     return render_template("login.html")
 
+"""                                                     ### REGISTRATIE ###         """
 
+@app.route("/registreer", methods=["GET", "POST"])
+def registreer():
+    if request.method == "POST":
+        step = request.form.get("step", "1")
+
+        if step == "1":
+            session["registratie"] = {
+                "first_name": request.form.get("first_name"),
+                "last_name": request.form.get("last_name"),
+                "email": request.form.get("email"),
+                "password": request.form.get("password"),
+                "postcode": request.form.get("postcode"),
+                "gender": request.form.get("gender"),
+                "phone": request.form.get("phone"),
+                "birth_date": request.form.get("birth_date"),
+            }
+            return redirect(url_for("registreer_stap2"))
+
+    return render_template("registreer-stap1.html")
 
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
@@ -355,16 +375,6 @@ def bhd_goedkeuringen():
     if session.get("role") != "admin":
         return "Geen Toegang", 403
     return render_template("/bhd-goedkeuringen.html")
-
-""""                                                        ### LOGIN PAGE ###               """
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-        user = users.get_user_by_email(email)
-
-
 
 
 if __name__ == "__main__":
