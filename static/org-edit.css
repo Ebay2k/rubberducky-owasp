@@ -1,0 +1,95 @@
+.header-text{
+    display: table;
+    width: fit-content;
+    text-align: center;
+
+    padding: 12px 24px;
+    margin: 20px auto;
+    border-radius: 8px;
+
+    background-color: #182834;
+    font-size:28px;
+    text-decoration: none;
+    color: white;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+    margin-left: 12%;
+    margin-right: 12%;
+}
+
+.text-container{
+    border: 3px;
+    border-style: solid;
+    border-color: #273F53;
+    border-radius: 8px;
+    padding: 25px;
+    background-color: #fff;
+    text-align: center;
+    object-align: center;
+}
+
+.label_text{
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    font-size: 25px;
+}
+
+.input-naam{
+    width: 40%;
+    border: 1px solid;
+    border-radius: 3px;
+    border-color: #273F53 ;
+}
+
+.input-beschrijving{
+    width: 90%;
+    height: 68%;
+}
+
+.submit-knop{
+    display: table;
+    width: 30%;
+    text-align: center;
+
+    padding: 12px 24px;
+    margin: 20px auto;
+    border-radius: 8px;
+
+    background-color: #182834;
+    font-size:28px;
+    text-decoration: none;
+    color: white;
+}
+
+.submit-knop:hover {
+    color: white;
+    background-color: #273F53;
+}
+
+.annuleren-knop{
+    display: table;
+    width: 30%;
+    text-align: center;
+
+    padding: 8px 24px;
+    margin: 5px auto;
+    border-radius: 8px;
+
+    background-color: #182834;
+    font-size:28px;
+    text-decoration: none;
+    color: white;
+}
+
+.annuleren-knop:hover {
+    color: white;
+    background-color: #273F53;
+}

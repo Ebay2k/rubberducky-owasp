@@ -45,13 +45,19 @@ class Organization:
             cur.execute("SELECT * FROM studies ORDER BY organization_id ASC")
             return cur.fetchall()
 
-    def get_single_form(self, form_id):
+    def get_single_form(self, form_id, organization_id):
         with self.db.connect() as con:
             cur = con.cursor()
-            cur.execute("SELECT * FROM studies WHERE id = ?", (form_id,))
+            cur.execute("SELECT * FROM studies WHERE id = ? AND organization_id = ?", (form_id, organization_id))
             return cur.fetchone()
 
-    def edit_form(self, form_id, title, status, description, available):
+    def get_form_by_org(self, organization_id):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM studies WHERE organization_id = ? ORDER BY id desc", (organization_id,))
+            return cur.fetchall()
+
+    def edit_form(self, form_id, organization_id, title, status, description, available):
         with self.db.connect() as con:
             cur = con.cursor()
             cur.execute("""
@@ -60,8 +66,8 @@ class Organization:
                  status = ?,
                  description = ?, 
                  available = ? 
-                    WHERE id = ?""",
-                 (title, status, description, available, form_id))
+                    WHERE id = ? AND organization_id = ?""",
+                 (title, status, description, available, form_id, organization_id))
             con.commit()
 
     def create_form(self, title, description, available, organization_id):

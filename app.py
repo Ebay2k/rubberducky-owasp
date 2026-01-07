@@ -406,7 +406,9 @@ def org_aanvragen():
     if session.get("role") != "organization":
         return "Geen Toegang", 403
 
-    forms = organizations.get_forms()
+    organization_id = session.get("organization_id")
+
+    forms = organizations.get_form_by_org(organization_id=organization_id)
     return render_template("/org-aanvragen.html", forms=forms)
 
 @app.route("/org-profiel", methods=["GET", "POST"])
@@ -432,6 +434,8 @@ def org_profiel():
 
 @app.route("/org-aanvragen/<int:form_id>", methods=["GET", "POST"])
 def org_aanvraag_edit(form_id):
+    organization_id = session.get("organization_id")
+
     if request.method == "POST":
         title = request.form["title"]
         status = request.form["status"]
@@ -439,12 +443,15 @@ def org_aanvraag_edit(form_id):
         available = 1 if "available" in request.form else 0
 
         organizations.edit_form(
-            form_id, title, status, description, available,
-        )
+            form_id, organization_id, title, status, description, available)
 
         return redirect(url_for("org_aanvragen"))
 
-    form = organizations.get_single_form(form_id)
+    form = organizations.get_single_form(form_id, organization_id)
+
+    if not form:
+        return "Geen toegang om dit onderzoek te wijzigen", 403
+
     return render_template("/org-aanvraag-edit.html", form=form)
 
 @app.route("/org-aanvragen/nieuw", methods=["GET", "POST"])
