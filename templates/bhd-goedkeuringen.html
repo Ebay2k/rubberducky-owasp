@@ -8,11 +8,51 @@
 <body>
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Hier komen alle goedkeuringen voor organisaties</h1>
-<p>Info over de organisaties</p>
+<h1>Hier komen alle goedkeuringen voor ervaringsdeskundige</h1>
+<h2>Info over de ervaringsdeskundige</h2>
 
-<h2>Hier komen alle goedkeuringen voor ervaringsdeskundige</h2>
-<p>Info over de ervaringsdeskundige</p>
+    <table class="ev_tabel">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>user email</th>
+                <th>goedkeuring status</th>
+                <th>actie</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for users in user_ev %}
+            <tr>
+                <form method="POST">
+                    <td>id: {{ users.id }}</td>
+                    <td>email: {{ users.email }}</td>
+
+                    <td>
+                        <select name="status">
+                            <option value="nieuw"
+                                {% if users["status"]|lower|trim == "nieuw" %}selected{% endif %}>
+                                Nieuw
+                            </option>
+
+                            <option value="goedgekeurd"
+                                {% if users["status"]|lower|trim == "goedgekeurd" %}selected{% endif %}>
+                                Goedgekeurd
+                            </option>
+
+                        </select>
+                    </td>
+
+                    <td>
+                    <input type="hidden" name="id" value="{{ users.id }}">
+                    <button type="submit">Opslaan</button>
+                </td>
+                </form>
+            </tr>
+
+        </form>
+        {% endfor %}
+    </tbody>
+    </table>
 {% endblock %}
 </body>
 </html>

@@ -11,3 +11,4 @@ class Profiles:
             cur.execute("SELECT * FROM profiles")
             con.commit()
             return cur.fetchall()
+
