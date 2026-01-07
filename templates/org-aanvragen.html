@@ -3,46 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Onderzoek overzicht</title>
-    <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" href="../static/org-studies.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 mb-5" aria-label="Hoofdnavigatie">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">Accessibility</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Wissel navigatie">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="/dashboard-org">Home</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-sm btn-outline-dark" href="/">Uitloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 <a href = "{{ url_for('org_aanvraag_nieuw') }}" class = "nieuw_button">
     Nieuw onderzoek toevoegen
 </a>
 
-<table class="tabel">
-    <thead>
-        <tr>
-            <th>Organisatie ID</th>
-            <th>Onderzoeks ID</th>
-            <th>Onderzoek</th>
-            <th>Status</th>
-            <th>Beschrijving</th>
-            <th>Beschikbaarheid</th>
-            <th>Aanpassen</th>
-        </tr>
-    </thead>
+<div class="studies-container">
+    {% for form in forms %}
+    <div class="study-card">
+        <!-- bovenste rij -->
+        <div class="study-top-row">
+            <span class="study-title">{{ form.title }}</span>
+            <span class="study-status">Status: {{ form.status }}</span>
+        </div>
 
-    <tbody>
-        {%for form in forms%}
-        <tr>
-            <td>{{ form.organization_id }}</td>
-            <td>{{ form.id }}</td>
-            <td>{{ form.title }}</td>
-            <td>{{ form.status }}</td>
-            <td>{{ form.description }}</td>
+        <div class="description">
+            {{ form.description }}
+        </div>
 
-            <td class="{{ 'Beschikbaar' if form.available else 'Niet beschikbaar' }}">
-                {{"Beschikbaar" if form.available else "Niet beschikbaar"}}
-            </td>
-            <td class="edit-button-container">
-                <a class="edit-button" href="/org-aanvragen/{{ form.id }}">Wijzig onderzoek {{form.id}}</a>
-            </td>
+        <div class="study-bottom-row">
+            <span class="study-reward">Beloning: {{form.reward if form.reward else "Geen"}}</span>
+            <a class="edit-button" href="{{ url_for('org_aanvraag_edit', form_id = form.id) }}">
+                Onderzoek Wijzigen</a>
+        </div>
 
-        </tr>
-        {%endfor%}
-    </tbody>
-</table>
+
+
+    </div>
+    {% endfor %}
+</div>
+
 </body>
 </html>
