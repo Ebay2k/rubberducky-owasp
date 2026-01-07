@@ -106,6 +106,14 @@ def registreer_stap2():
             return redirect(url_for("registreer_stap3"))
         else:
             return redirect(url_for("registreer_stap4"))
+
+    db = Database('data/app.db')
+    with db.connect() as con:
+        cur = con.cursor()
+        cur.execute('SELECT * FROM disabilities ORDER BY category, name')
+        disabilities = cur.fetchall()
+
+    return render_template("registreer-stap2.html", disabilities=disabilities)
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
 def dashboard_ev():
