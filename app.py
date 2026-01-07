@@ -41,10 +41,18 @@ def login():
         user = users.get_user_by_email(email)
 
         if user is None:
-            return "Onbekende gebruiker", 403
+            flash("Onbekende gebruiker", "error")
+            return render_template("login.html")
 
         if user["password"] != password:
-            return "Onjuiste wachtwoord", 403
+            flash("Onjuist wachtwoord", "error")
+            return render_template("login.html")
+
+        if user["status"] == "nieuw":
+            flash(
+                "Je account wordt nog beoordeeld door een beheerder. Je ontvangt bericht zodra je account is goedgekeurd.",
+                "warning")
+            return render_template("login.html")
 
         session.clear()
         session["user_id"] = user["id"]
@@ -52,7 +60,6 @@ def login():
 
         if user["organization_id"] is not None:
             session["organization_id"] = user["organization_id"]
-
 
         if user["role"] == "admin":
             return redirect(url_for("dashboard_bhd"))
