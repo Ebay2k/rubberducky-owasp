@@ -73,6 +73,7 @@ def registreer():
         step = request.form.get("step", "1")
 
         if step == "1":
+            # Persoonsgegeven opslan 
             session["registratie"] = {
                 "first_name": request.form.get("first_name"),
                 "last_name": request.form.get("last_name"),
@@ -106,7 +107,7 @@ def registreer_stap2():
             return redirect(url_for("registreer_stap3"))
         else:
             return redirect(url_for("registreer_stap4"))
-
+    # Beperkingen ophalen
     db = Database('data/app.db')
     with db.connect() as con:
         cur = con.cursor()
@@ -114,6 +115,21 @@ def registreer_stap2():
         disabilities = cur.fetchall()
 
     return render_template("registreer-stap2.html", disabilities=disabilities)
+
+
+@app.route("/registreer/stap3", methods=["GET", "POST"])
+def registreer_stap3():
+    if "registratie" not in session:
+        return redirect(url_for("registreer"))
+
+    if request.method == "POST":
+        # Toezichthouder
+        session["registratie"]["guardian_name"] = request.form.get("guardian_name")
+        session["registratie"]["guardian_email"] = request.form.get("guardian_email")
+        session["registratie"]["guardian_phone"] = request.form.get("guardian_phone")
+        return redirect(url_for("registreer_stap4"))
+
+    return render_template("registreer-stap3.html")
 """                                                     ### Ervaringsdeskundige ###         """
 @app.route("/dashboard-ev")
 def dashboard_ev():
