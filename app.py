@@ -72,6 +72,14 @@ def login():
 
     return render_template("login.html")
 
+
+"""                                                     ### LOGOUT ###                        """
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Je bent succesvol uitgelogd", "success")
+    return redirect(url_for("login"))
+
 """                                                     ### REGISTRATIE ###         """
 
 @app.route("/registreer", methods=["GET", "POST"])
