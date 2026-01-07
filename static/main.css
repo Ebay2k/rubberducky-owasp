@@ -244,5 +244,28 @@ label {
     margin-top: 15px;
 }
 
+.ev_tabel {
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
 
+.ev_tabel th{
+    border: 1px;
+    border-radius: 3px;
+    padding: 12px;
+    color: #ffffff;
+    background-color: #273F53;
+}
+
+.ev_tabel td{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 12px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
 

@@ -352,11 +352,20 @@ def bhd_ev_detail():
     profile = profiles.get_profile()
     return render_template("/bhd-ev-detail.html", profile=profile)
 
-@app.route("/bhd-goedkeuringen")
+@app.route("/bhd-goedkeuringen", methods=["GET", "POST"])
 def bhd_goedkeuringen():
     if session.get("role") != "admin":
         return "Geen Toegang", 403
-    return render_template("/bhd-goedkeuringen.html")
+
+    if request.method == "POST":
+        status = request.form.get("status")
+        id = request.form.get("id")
+
+        users.update_users(status, id)
+        return redirect(url_for("bhd_goedkeuringen"))
+
+    user_ev = users.get_user_ervaringsdeskundige()
+    return render_template("/bhd-goedkeuringen.html", user_ev=user_ev)
 
 @app.route("/bhd-org-aanmaken")
 def bhd_org_aanmaken():
