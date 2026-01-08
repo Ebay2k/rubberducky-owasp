@@ -77,3 +77,21 @@ class Organization:
             INSERT INTO studies (title, description, available, organization_id) VALUES (?, ?, ?, ?)""",
                  (title, description, available, organization_id))
             con.commit()
+
+    def get_enrollments_for_study(self, study_id):
+        with self.db.connect() as con:
+            cur = con.cursor()
+            cur.execute("""
+                SELECT
+                    e.profile_id AS enrollment_id,
+                    e.status AS enrollment_status,
+                    p.first_name,
+                    p.last_name,
+                    p.phone,
+                    u.email
+                FROM enrollments e
+                JOIN profiles p ON e.profile_id = p.id
+                JOIN users u ON e.profile_id = u.id
+                WHERE e.study_id = ?
+            """, (study_id,))
+            return cur.fetchall()

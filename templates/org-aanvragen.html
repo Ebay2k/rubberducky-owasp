@@ -49,9 +49,8 @@
             <span class="study-reward">Beloning: {{form.reward if form.reward else "Geen"}}</span>
             <a class="edit-button" href="{{ url_for('org_aanvraag_edit', form_id = form.id) }}">
                 Onderzoek Wijzigen</a>
+            <a class="inschrijvingen-button" href="{{ url_for('org_aanvraag_inschrijvingen', study_id = form.id) }}">Inschrijvingen bekijken</a>
         </div>
-
-
 
     </div>
     {% endfor %}

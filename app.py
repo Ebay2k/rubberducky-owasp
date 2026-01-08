@@ -432,6 +432,23 @@ def org_profiel():
     organization = organizations.get_organization_by_id(organization_id)
     return render_template("/org-profiel.html", organization=organization)
 
+@app.route("/org-aanvragen/<int:study_id>/inschrijvingen")
+def org_aanvraag_inschrijvingen(study_id):
+    if session.get("role") != "organization":
+        return "Geen Toegang", 403
+
+    organization_id = session.get("organization_id")
+
+    study = organizations.get_single_form(study_id, organization_id)
+    if not study:
+        return "Geen toegang tot dit onderzoek", 403
+
+    enrollments = organizations.get_enrollments_for_study(study_id)
+
+    return render_template(
+        "org-aanvragen-inschrijvingen.html",
+        study=study, enrollments=enrollments)
+
 @app.route("/org-aanvragen/<int:form_id>", methods=["GET", "POST"])
 def org_aanvraag_edit(form_id):
     organization_id = session.get("organization_id")

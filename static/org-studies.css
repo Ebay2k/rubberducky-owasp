@@ -106,3 +106,20 @@
     color: white;
     background-color: #273F53;
 }
+
+/*  */
+.inschrijvingen-button {
+    padding: 6px 12px;
+    margin-top: 4px;
+    border: 1px solid;
+    border-color: #273F53;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    background-color: #182834;
+
+}
+
+.inschrijvingen-button:hover {
+    color: white;
+    background-color: #273F53;
