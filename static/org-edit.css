@@ -51,7 +51,10 @@ form{
 
 .input-beschrijving{
     width: 90%;
-    height: 68%;
+    height: 60%;
+    border: 1px solid;
+    border-radius: 3px;
+    border-color: #273F53;
 }
 
 .submit-knop{

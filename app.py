@@ -475,11 +475,11 @@ def org_aanvraag_nieuw():
     if request.method == "POST":
         title = request.form["title"]
         description = request.form["description"]
-        available = 1 if "available" in request.form else 0
+        reward = request.form["reward"]
 
         organization_id = session.get("organization_id")
 
-        organizations.create_form(title, description, available, organization_id)
+        organizations.create_form(title, description, reward, organization_id)
         return redirect(url_for("org_aanvragen"))
     return render_template("/org-nieuwe-aanvraag.html")
 

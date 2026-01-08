@@ -70,12 +70,12 @@ class Organization:
                  (title, status, description, available, form_id, organization_id))
             con.commit()
 
-    def create_form(self, title, description, available, organization_id):
+    def create_form(self, title, description, reward, organization_id):
         with self.db.connect() as con:
             cur = con.cursor()
             cur.execute("""
-            INSERT INTO studies (title, description, available, organization_id) VALUES (?, ?, ?, ?)""",
-                 (title, description, available, organization_id))
+            INSERT INTO studies (title, description, reward, organization_id) VALUES (?, ?, ?, ?)""",
+                 (title, description, reward, organization_id))
             con.commit()
 
     def get_enrollments_for_study(self, study_id):
