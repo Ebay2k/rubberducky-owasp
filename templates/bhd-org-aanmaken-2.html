@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Registreren - Stap 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
+</head>
+<body>
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <a href="{{ url_for('org_registreer') }}" class="back-link">← Terug</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Organisatie registreren</h1>
+            <p class="detail-organization">Stap 2 van 2: Bevestigen en Voorwaarden</p>
+        </div>
+
+        <form method="POST" class="detail-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <section class="detail-section">
+                <h2>Overzicht van de gegevens</h2>
+                <div class="detail-description">
+                    <p><strong>Organisatie naam:</strong> {{ org_data.name }}</p>
+                    <p><strong>Type organisatie:</strong> {{ org_data.type }}</p>
+                    <p><strong>Website:</strong> {{ org_data.website }}</p>
+                    <p><strong>Discription:</strong> {{ org_data.description }}</p>
+                    <p><strong>Contact persoon:</strong> {{ org_data.contact_person }}</p>
+                    <p><strong>Email:</strong> {{ org_data.email }}</p>
+                    <p><strong>Telefoon nummer:</strong> {{ org_data.phone }}</p>
+                </div>
+            </section>
+
+            <section class="detail-section enrollment-section">
+                <button type="submit" class="enroll-button-large">
+                    Registratie voltooien
+                </button>
+                <p class="enrolled-info" style="margin-top: 15px;">
+                    Organisatie aangemaakt
+                </p>
+            </section>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
