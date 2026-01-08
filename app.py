@@ -438,7 +438,6 @@ def org_aanvraag_inschrijvingen(study_id):
         return "Geen Toegang", 403
 
     organization_id = session.get("organization_id")
-
     study = organizations.get_single_form(study_id, organization_id)
     if not study:
         return "Geen toegang tot dit onderzoek", 403

@@ -50,15 +50,19 @@
 /* onderste rij */
 .study-bottom-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .study-reward {
+    text-align: center;
     border: 1px solid;
     border-color: #273F53;
     border-radius: 4px;
     padding: 5px 10px;
+    flex-shrink: 0;
+    min-width: 240px;
 }
 
 /* org info */

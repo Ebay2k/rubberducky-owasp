@@ -3,43 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Onderzoek Wijzigen</title>
-    <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" href="../static/org-edit.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-<h1 class="pagina_titel">Onderzoek {{ form.id }} wijzigen</h1>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 mb-5" aria-label="Hoofdnavigatie">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">Accessibility</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Wissel navigatie">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="/dashboard-org">Home</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-sm btn-outline-dark" href="/">Uitloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<form method = "post" class="edit_form">
-    <label class="naam_onderzoek">
-        Onderzoeksnaam: <input type="text" name="title" value="{{ form.title }}">
+
+<h1 class="header-text">Onderzoek {{ form.id }} wijzigen.</h1>
+
+<form method = "post">
+    <label class="text-container">
+        <span class="label_text">
+            Onderzoeksnaam:
+        </span>
+        <input type="text" name="title" value="{{ form.title }}" class="input-naam" required>
     </label>
     <br><br>
 
-    <label class="onderzoeks_status">
-        Status:
-        <select name="status">
-            <option value="nieuw" {{ "selected" if form.status == "nieuw" }}>Nieuw</option>
-            <option value="goedgekeurd" {{ "selected" if form.status == "goedgekeurd" }}>Goedgekeurd</option>
-            <option value="afgekeurd" {{ "selected" if form.status == "afgekeurd" }}>Afgekeurd</option>
-            <option value="gesloten" {{ "selected" if form.status == "gesloten" }}>Gesloten</option>
-        </select>
+
+    <label class="text-container">
+        <span class="label_text">
+            Beschrijving:
+        </span>
+        <input name="description" value="{{ form.description }}" class="input-beschrijving" required>
     </label>
     <br><br>
-
-    <label class="beschrijving_onderzoek">
-        Beschrijving:
-        <textarea name="description">{{ form.description }}</textarea>
-    </label>
-    <br><br>
-
+<!--
     <label class="checkbox">
         <input type="checkbox" name="available" {{"checked" if form.available }}>
         beschikbaar
     </label>
     <br><br>
-
-    <button type="submit">Wijzigingen opslaan?</button>
-    <a href="{{ url_for('org_aanvragen') }}">Annuleren</a>
+-->
+    <button type="submit" class="submit-knop">Wijzigingen opslaan?</button>
+    <a href="{{ url_for('org_aanvragen') }}" class = "annuleren-knop">Annuleren</a>
 
 
 
