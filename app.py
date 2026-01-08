@@ -522,12 +522,58 @@ def bhd_goedkeuringen():
     user_ev = users.get_user_ervaringsdeskundige()
     return render_template("/bhd-goedkeuringen.html", user_ev=user_ev)
 
-@app.route("/bhd-org-aanmaken")
-def bhd_org_aanmaken():
-    if session.get("role") != "admin":
-        return "Geen Toegang", 403
-    return render_template("/bhd-org-aanmaken.html")
+@app.route("/bhd-org-aanmaken", methods=["GET", "POST"])
+def org_registreer():
+    if request.method == "POST":
+            session["org_registratie"] = {
+                "name": request.form.get("name"),
+                "type": request.form.get("type"),
+                "website": request.form.get("website"),
+                "description": request.form.get("description"),
+                "contact_person": request.form.get("contact_person"),
+                "email": request.form.get("email"),
+                "phone": request.form.get("phone"),
+                "details": request.form.get("details"),
+            }
+            return redirect(url_for("org_registreer_2"))
 
+    return render_template("bhd-org-aanmaken.html")
+
+@app.route("/bhd-org-aanmaken-2", methods=["GET", "POST"])
+def org_registreer_2():
+    org_data = session.get("org_registratie")
+
+    if not org_data:
+        return redirect(url_for("org_registreer"))
+
+    if request.method == "POST":
+        db = Database('data/app.db')
+        with db.connect() as con:
+            cur = con.cursor()
+            cur.execute(
+                '''
+                INSERT INTO organizations
+                (name, type, website, description, contact_person, email, phone, details)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''',
+                (
+                    org_data["name"],
+                    org_data["type"],
+                    org_data["website"],
+                    org_data["description"],
+                    org_data["contact_person"],
+                    org_data["email"],
+                    org_data["phone"],
+                    org_data["details"],
+                )
+            )
+            con.commit()
+
+        session.pop("org_registratie", None)
+        flash("Registratie voltooid!", "success")
+        return redirect(url_for("dashboard_bhd"))
+
+    return render_template("bhd-org-aanmaken-2.html", org_data=org_data)
 
 if __name__ == "__main__":
     app.run(debug=True)

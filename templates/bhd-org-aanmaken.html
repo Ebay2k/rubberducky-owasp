@@ -2,9 +2,79 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Beheerder Organisatie aanmaken</title>
+    <title>Registreren - Stap 1</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard-ev.css') }}">
 </head>
 <body>
+{% extends 'layout.html' %}
+{% block content %}
 
+<div class="container">
+    <a href="{{ url_for('dashboard_bhd') }}" class="back-link">← Terug naar dashboard</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 class="detail-title">Organisatie registreren</h1>
+            <p class="detail-organization">Stap 1 van 2: Organisatie gegevens</p>
+        </div>
+
+        <form method="POST" class="detail-content">
+            <input type="hidden" name="step" value="1">
+
+            <section class="detail-section">
+                <h2>Persoonlijke Gegevens</h2>
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="name">Organisatie naam *</label>
+                        <input type="text" id="name" name="name" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="type">Type organisatie *</label>
+                        <select id="type" name="type" class="detail-value" required>
+                            <option value="">Selecteer...</option>
+                            <option value="non-profit">Non-profit</option>
+                            <option value="commercieel">Commercieel</option>
+                        </select>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="website">Website *</label>
+                        <input type="text" id="website" name="website" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="description">Beschrijving *</label>
+                        <input type="text" id="description" name="description" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="contact_person">Contact persoon *</label>
+                        <input type="text" id="contact_person" name="contact_person" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="email">Email *</label>
+                        <input type="email" id="email" name="email" class="detail-value" required>
+                    </div>
+
+                    <div class="detail-info-item">
+                        <label class="detail-label" for="phone">Telefoonnummer *</label>
+                        <input type="tel" id="phone" name="phone" class="detail-value"
+                               placeholder="+31 6 12345678" required>
+                    </div>
+                </div>
+            </section>
+
+            <section class="detail-section enrollment-section">
+                <button type="submit" class="enroll-button-large">
+                    Volgende stap →
+                </button>
+            </section>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
 </body>
 </html>
