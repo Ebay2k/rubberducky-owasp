@@ -87,11 +87,14 @@ class Organization:
                     e.status AS enrollment_status,
                     p.first_name,
                     p.last_name,
+                    d.name AS disability_id,
                     p.phone,
                     u.email
                 FROM enrollments e
                 JOIN profiles p ON e.profile_id = p.id
                 JOIN users u ON e.profile_id = u.id
+                JOIN profile_disabilities pd ON e.profile_id = pd.profile_id
+                JOIN disabilities d ON pd.disability_id = d.id
                 WHERE e.study_id = ?
             """, (study_id,))
             return cur.fetchall()
