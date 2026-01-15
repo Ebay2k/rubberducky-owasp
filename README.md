@@ -38,10 +38,10 @@ Volg de onderstaande stappen om de applicatie lokaal te runnen.
 - Password: ``secret``
 
 ### Screenshots
-![img.png](img.png)\
-![img_1.png](img_1.png)\
-![img_2.png](img_2.png)\
-![img_3.png](img_3.png)
+![img.png](Docs/img.png)\
+![img_1.png](Docs/img_1.png)\
+![img_2.png](Docs/img_2.png)\
+![img_3.png](Docs/img_3.png)
 
 
 ### Bronnen
@@ -54,4 +54,11 @@ Volg de onderstaande stappen om de applicatie lokaal te runnen.
 [Updating DB](https://www.youtube.com/watch?v=Wicjkn5_nIQ)\
 [Forms](https://flask.palletsprojects.com/en/3.0.x/quickstart/#the-request-object)\
 [Form validatie](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)\
+[Try Exception handling](https://www.w3schools.com/python/python_try_except.asp)
+
+![img_4.png](Docs/img_4.png)
+
+![img_5.png](Docs/img_5.png)
+
+![img_6.png](Docs/img_6.png)
 
