@@ -56,9 +56,28 @@ Volg de onderstaande stappen om de applicatie lokaal te runnen.
 [Form validatie](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)\
 [Try Exception handling](https://www.w3schools.com/python/python_try_except.asp)
 
+
+## AI Bronvermelding
+
 ![img_4.png](Docs/img_4.png)
 
 ![img_5.png](Docs/img_5.png)
 
 ![img_6.png](Docs/img_6.png)
+
+### Flask werkte niet om onderzoeken te laten zien
+### Conversatie<br/>
+https://chatgpt.com/share/6968e47d-d54c-8009-99f7-9c2bdca41940
+
+### Oplossing<br/>
+In plaats van ```{{% for id in studies %}}``` moest ik ```{{% for study in studies %}}```<br/>
+gebruiken om de loop werkend te krijgen.
+
+### Waar heb ik de oplossing gebruikt?<br/>
+Bestand<br/>
+in ev-aanvragen.html.<br/><br/>
+Code regel<br/>
+Dit is inmiddels lijn 13 geworden.<br/><br/>
+Git link<br/>
+[Github link](https://github.com/Rac-Software-Development/wp2-2025-mvc-1b3-rubberducky/blob/main/templates/ev-aanvragen.html)
 
