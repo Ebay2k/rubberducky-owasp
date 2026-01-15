@@ -31,7 +31,7 @@ profiles = Profiles(DB_PATH)
 def index():
     if session.get("role") != "admin":
         return redirect(url_for("login"))
-    return render_template("home.html")
+    return redirect(url_for("login"))
 
 """                                                     ### LOGIN PAGE ###                   """
 @app.route("/login", methods=["GET", "POST"])
@@ -514,12 +514,20 @@ def bhd_goedkeuringen():
     if request.method == "POST":
         status = request.form.get("status")
         id = request.form.get("id")
+        type_ = request.form.get("type")
 
-        users.update_users(status, id)
+        if type_ == "user":
+            users.update_users(status, id)
+        elif type_ == "study":
+            studies.update_studies(status, id)
+
         return redirect(url_for("bhd_goedkeuringen"))
 
     user_ev = users.get_user_ervaringsdeskundige()
-    return render_template("/bhd-goedkeuringen.html", user_ev=user_ev)
+    studies_org = studies.get_studies_org()
+    return render_template(
+        "bhd-goedkeuringen.html", user_ev=user_ev, studies_org=studies_org)
+
 
 @app.route("/bhd-org-aanmaken", methods=["GET", "POST"])
 def org_registreer():

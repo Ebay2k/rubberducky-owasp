@@ -4,14 +4,38 @@
     <meta charset="UTF-8">
     <title>Goedkeuringen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-{% extends 'layout.html' %}
-{% block content %}
-<h1>Hier komen alle goedkeuringen voor ervaringsdeskundige</h1>
-<h2>Info over de ervaringsdeskundige</h2>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 mb-5" aria-label="Hoofdnavigatie">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="dashboard-bhd">Accessibility</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Wissel navigatie">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="dashboard-bhd">Home</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-sm btn-outline-dark" href="/">Uitloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <table class="ev_tabel">
+{% block content %}
+<div class="org-title">
+    <h1>Hier kan je ervaringsdeskundige en aanvragen goedkeuren</h1>
+</div>
+
+<div class="org-sub">
+    <h2>Info over de ervaringsdeskundige</h2>
+</div>
+    <table class="ev_tabel" align="center" >
         <thead>
             <tr>
                 <th>Id</th>
@@ -22,32 +46,90 @@
         </thead>
         <tbody>
             {% for users in user_ev %}
-            <tr>
                 <form method="POST">
+                <tr>
                     <td>id: {{ users.id }}</td>
                     <td>email: {{ users.email }}</td>
 
                     <td>
                         <select name="status">
                             <option value="nieuw"
-                                {% if users["status"]|lower|trim == "nieuw" %}selected{% endif %}>
-                                Nieuw
-                            </option>
+                                {% if users["status"]|lower|trim == "nieuw" %}selected{% endif %}> Nieuw</option>
 
                             <option value="goedgekeurd"
-                                {% if users["status"]|lower|trim == "goedgekeurd" %}selected{% endif %}>
-                                Goedgekeurd
-                            </option>
-
+                                {% if users["status"]|lower|trim == "goedgekeurd" %}selected{% endif %}> Goedgekeurd</option>
                         </select>
                     </td>
 
                     <td>
                     <input type="hidden" name="id" value="{{ users.id }}">
+                    <input type="hidden" name="type" value="user">
                     <button type="submit">Opslaan</button>
                 </td>
+                </tr>
                 </form>
+
+
+        </form>
+        {% endfor %}
+    </tbody>
+    </table>
+
+<div class="org-title2">
+<h2>Info over de aanvragen</h2>
+</div>
+    <table class="org_tabel" align="center" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Organisatie id</th>
+                <th>Titel</th>
+                <th>Omschrijving</th>
+                <th>Start datum</th>
+                <th>Eind datum</th>
+                <th>Study type</th>
+                <th>Locatie</th>
+                <th>Beloning</th>
+                <th>Min leeftijd</th>
+                <th>Max leeftijd</th>
+                <th>Goedkeuring status</th>
+                <th>actie</th>
             </tr>
+        </thead>
+        <tbody>
+            {% for studies in studies_org %}
+                <form method="POST">
+                <tr>
+                    <td>{{ studies.id }}</td>
+                    <td>{{ studies.organization_id }}</td>
+                    <td>{{ studies.title }}</td>
+                    <td>{{ studies.description }}</td>
+                    <td>{{ studies.start_date }}</td>
+                    <td>{{ studies.end_date }}</td>
+                    <td>{{ studies.study_type }}</td>
+                    <td>{{ studies.location }}</td>
+                    <td>{{ studies.reward }}</td>
+                    <td>{{ studies.age_min }}</td>
+                    <td>{{ studies.age_max }}</td>
+
+                    <td>
+                        <select name="status">
+                            <option value="nieuw"
+                                {% if studies["status"]|lower|trim == "nieuw" %}selected{% endif %}> Nieuw</option>
+
+                            <option value="goedgekeurd"
+                                {% if studies["status"]|lower|trim == "goedgekeurd" %}selected{% endif %}> Goedgekeurd</option>
+                        </select>
+                    </td>
+
+                    <td>
+                    <input type="hidden" name="id" value="{{ studies.id }}">
+                    <input type="hidden" name="type" value="study">
+                    <button type="submit">Opslaan</button>
+                </td>
+                </tr>
+                </form>
+
 
         </form>
         {% endfor %}

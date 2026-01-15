@@ -8,27 +8,6 @@ html {
     overflow-y: scroll;
 }
 
-nav.navbar {
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-}
-
-nav.navbar .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-left: 40px;
-    padding-right: 40px;
-}
-
-nav.navbar .navbar-brand {
-    margin-right: auto;
-}
-
-nav.navbar .navbar-nav {
-    margin-left: auto;
-}
-
 .tabel {
     text-align: center;
     margin-top: 20px;
@@ -181,43 +160,43 @@ nav.navbar .navbar-nav {
 }
 
 .broodje {
-    background-color: aqua;
+    background-color: #DCE7E8;
     width: 400px;
     border-top: 15px solid white;
-    border-bottom: 15px solid aqua;
+    border-bottom: 15px solid #DCE7E8;
 }
 
 .augurk {
-    background-color: aqua;
+    background-color: #DCE7E8;
     width: 390px;
-    border-top: 5px solid aqua;
+    border-top: 5px solid #DCE7E8;
 }
 .sla {
-    background-color: aqua;
+    background-color: #DCE7E8;
     width: 390px;
 }
 
 .sla2 {
-    background-color: aqua;
+    background-color: #DCE7E8;
     width: 390px;
 }
 
 .sla3 {
-    border-bottom: 15px solid aqua;
+    border-bottom: 15px solid #DCE7E8;
 }
 
 .info {
     display: none;
     width: 400px;
     align-content: center;
-    background-color: aqua;
+    background-color: #DCE7E8;
 }
 
 .broodje2 {
-    background-color: aqua;
+    background-color: #DCE7E8;
     align-content: center;
     width: 300px;
-    border-bottom: 5px solid aqua;
+    border-bottom: 5px solid #DCE7E8;
 }
 
 #ch {
@@ -247,8 +226,6 @@ label {
 .ev_tabel {
     text-align: center;
     margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 20px;
     font-family: Arial, sans-serif;
 }
@@ -269,3 +246,43 @@ label {
     padding-right: 100px;
 }
 
+.org_tabel {
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.org_tabel th{
+    border: 1px;
+    border: radius: 3px;
+    padding: 12px;
+    color: #ffffff;
+    background-color: #273F53;
+}
+
+
+.org_tabel td{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.org-title {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.org-sub {
+    text-align: center;
+    padding-top: 60px;
+}
+
+.org-title2 {
+    text-align: center;
+    padding-top: 35px;
+}
