@@ -41,7 +41,8 @@ Volg de onderstaande stappen om de applicatie lokaal te runnen.
 ![img.png](Docs/img.png)\
 ![img_1.png](Docs/img_1.png)\
 ![img_2.png](Docs/img_2.png)\
-![img_3.png](Docs/img_3.png)
+![img_3.png](Docs/img_3.png)\
+![Schermafbeelding 2026-01-16 190058.png](../../OneDrive/Afbeeldingen/Screenshots/Schermafbeelding%202026-01-16%20190058.png)
 
 
 ### Bronnen
@@ -80,4 +81,3 @@ Code regel<br/>
 Dit is inmiddels lijn 13 geworden.<br/><br/>
 Git link<br/>
 [Github link](https://github.com/Rac-Software-Development/wp2-2025-mvc-1b3-rubberducky/blob/main/templates/ev-aanvragen.html)
-
