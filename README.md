@@ -42,7 +42,7 @@ Volg de onderstaande stappen om de applicatie lokaal te runnen.
 ![img_1.png](Docs/img_1.png)\
 ![img_2.png](Docs/img_2.png)\
 ![img_3.png](Docs/img_3.png)\
-![Schermafbeelding 2026-01-16 190058.png](../../OneDrive/Afbeeldingen/Screenshots/Schermafbeelding%202026-01-16%20190058.png)
+![Schermafbeelding 2026-01-16 190058.png](Docs/Schermafbeelding%202026-01-16%20190058.png)
 
 
 ### Bronnen
