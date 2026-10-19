@@ -8,6 +8,7 @@ from models.organization import Organization
 from models.study import Study
 from models.enrollment import Enrollment
 from models.profiles import Profiles
+from functools import wraps
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -25,6 +26,17 @@ organizations = Organization(DB_PATH)
 studies = Study(DB_PATH)
 enrollments = Enrollment(DB_PATH)
 profiles = Profiles(DB_PATH)
+def role_required(*roles):
+    def decorator(view):
+        @wraps(view)
+        def wrapped(*args, **kwargs):
+            if session.get("user_id") is None:
+                return redirect(url_for("login"))
+            if session.get("role") not in roles:
+                return "Geen Toegang", 403
+            return view(*args, **kwargs)
+        return wrapped
+    return decorator
 
 """                                                     ### HOME PAGE ###                   """
 @app.route("/")
@@ -530,6 +542,7 @@ def bhd_goedkeuringen():
 
 
 @app.route("/bhd-org-aanmaken", methods=["GET", "POST"])
+@role_required("admin")
 def org_registreer():
     if request.method == "POST":
             session["org_registratie"] = {
@@ -547,6 +560,7 @@ def org_registreer():
     return render_template("bhd-org-aanmaken.html")
 
 @app.route("/bhd-org-aanmaken-2", methods=["GET", "POST"])
+@role_required("admin")
 def org_registreer_2():
     org_data = session.get("org_registratie")
 
